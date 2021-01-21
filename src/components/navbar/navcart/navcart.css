@@ -1,0 +1,63 @@
+header nav .header-icons {
+    list-style: none;
+    margin-right: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    margin-bottom: 0px;
+}
+  
+header nav .header-icons li {
+    margin-left: 2.714em;
+}
+  
+header nav .header-icons li:first-child {
+    margin-left: 0;
+}
+header nav .header-icons li i {
+    font-size: 1.55em;
+    line-height: .9em;
+    margin-left: .5em;
+}
+header nav .header-icons li:first-child i {
+    margin-left: 0;
+}
+  
+header nav .header-icons li.cart {
+    position: relative;
+}
+  
+header nav .header-icons li.cart i {
+    margin-right: 10px;
+}
+  
+header nav .header-icons li.cart .cart-counter {
+    bottom: -3px;
+    left: 25px;
+    position: absolute;
+    background-color: #fbe700;
+    color: #000;
+    font-size: .75em;
+    line-height: 1.75em;
+    font-weight: 700;
+    width: 1.75em;
+    text-align: center;
+    border-radius: 50%;
+    display: inline-block;
+}
+  
+  
+@media screen and (max-width: 991px) {
+    header nav .header-icons li {
+      margin-left: .5em;
+    }
+  
+    header nav .header-icons li.user {
+      text-indent: -9999px;
+    }
+  
+    header nav .header-icons {
+      order: 3;
+    }
+}

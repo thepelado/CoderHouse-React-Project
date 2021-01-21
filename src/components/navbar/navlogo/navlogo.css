@@ -1,0 +1,10 @@
+header nav .logo {
+    height: 100%;
+}
+
+@media screen and (max-width: 991px) {
+    header nav .navbar-brand {
+        order: 2;
+        margin: 0 auto;
+    }
+}

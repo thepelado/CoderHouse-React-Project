@@ -1,0 +1,35 @@
+header nav li a {
+    color: #FFF;
+    font-weight: 700;
+    font-size: 15px;
+}
+  
+header nav li a:hover {
+    color: #FFF;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 991px) {
+    header nav li .dropdown-menu {
+        width: 100%;
+        border: 0px;
+    }
+        
+    header nav .navbar-collapse .dropdown-menu {
+        border-radius: 0;
+        padding: 10px 0;
+    }
+
+    header nav .navbar-collapse .dropdown-menu a {
+        border-bottom: 1px solid #cecece;
+        margin-left: 0;
+    }
+
+    header nav .navbar-collapse .dropdown-menu a:last-child {
+        border-bottom: 0;
+    }
+
+    header nav .navbar-collapse .dropdown.show {
+        background-color: #b3b3b3;
+    }
+}
