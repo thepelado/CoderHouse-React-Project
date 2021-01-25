@@ -1,6 +1,6 @@
 import Navlogo from './navlogo/';
-import Navitems from './navitems/'
-import Navcart from './navcart/'
+import Navitems from './navitems/';
+import Cartwidget from './cartwidget/';
 import './navbar.css';
 
 const Navbar = () => {
@@ -13,7 +13,7 @@ const Navbar = () => {
             <div className='collapse navbar-collapse' id='navbarSupportedContent'>
                 <Navitems/>                
             </div>
-            <Navcart/>
+            <Cartwidget/>
         </nav>
     );
 }

@@ -1,6 +1,6 @@
 import './navcart.css';
 
-const Cart = () => {
+const Cartwidget = () => {
     return(
         <ul className='header-icons'>
             <li className='header-icon' data-toggle='tooltip' data-title='Wishlist' data-original-title='' title=''>
@@ -24,4 +24,4 @@ const Cart = () => {
     );
 }
 
-export default Cart;
+export default Cartwidget;
