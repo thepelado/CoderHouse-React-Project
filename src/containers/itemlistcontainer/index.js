@@ -52,7 +52,7 @@ const ItemListContainer = () => {
         <div className="list-items mt-2 d-flex">
         {
             items.map( (item, key) => {
-                return <div className="col mb-5" key={items.id} >
+                return <div className="col mb-5" key={key} >
                     <Item key={key} item={item} onChangeItem={updateItems} />
                 </div>
             })

@@ -10,7 +10,7 @@ function App() {
       <header>
         <Navbar/>
       </header>
-      <section class="container-fluid">
+      <section className="container-fluid">
         <div className="col-12">
           <div className="row">
             <ItemListContainer/>
