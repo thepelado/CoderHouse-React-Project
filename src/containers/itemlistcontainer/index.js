@@ -1,7 +1,9 @@
+
+import React, { useState } from 'react';
 import Item from './item/';
 
-const products = [
-    {
+const ItemListContainer = () => {
+    const [ items, setItems ] = useState([    {
         id: 1,
         title: "Teclado Gamer Redragon Yama K550 Rgb Qwerty Outemu Purple",
         brand: "Redragon",
@@ -29,22 +31,34 @@ const products = [
         photo: "https://www.gaming-city.com.ar/web/wp-content/uploads/2021/01/D_910628-MLA44692841921_012021-O.jpg"
     },
     {
-        id: 3,
+        id: 4,
         title: "Teclado Mecanico Gamer Redragon Shrapnel K589 Rgb Outemu Bl",
         brand: "Redragon",
         category: "Keyboards",
-        stock: 10,
+        stock: 5,
         price: "7990",
         photo: "https://www.gaming-city.com.ar/web/wp-content/uploads/2021/01/D_684851-MLA44692946564_012021-O.jpg"        
-    }
-];
+    }]);
 
-const ItemListContainer = () => {
+    const updateItems = (item, soldQuantity) => {
+        item.stock = item.stock - soldQuantity;
+        let updatedItems = [...items];
+        let index = updatedItems.findIndex(x => x.id === item.id);
+        updatedItems[index] = item;
+        setItems(updatedItems);
+    }
+
     return (
-        products.map( (product) => 
-            <Item product={product} />
-        )
-    );
+        <div className="list-items mt-2 d-flex">
+        {
+            items.map( (item, key) => {
+                return <div className="col mb-5" key={items.id} >
+                    <Item key={key} item={item} onChangeItem={updateItems} />
+                </div>
+            })
+        }
+        </div>
+    )
 }
 
 export default ItemListContainer;

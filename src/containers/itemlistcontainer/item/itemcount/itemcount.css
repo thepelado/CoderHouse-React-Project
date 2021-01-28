@@ -1,0 +1,8 @@
+.item-count .btn-minus,
+.item-count .btn-plus {
+    min-width: 2.5rem;
+}
+
+.item-count .amount {
+    text-align: center;
+}
