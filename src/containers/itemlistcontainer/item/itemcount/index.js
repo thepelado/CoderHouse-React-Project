@@ -16,28 +16,30 @@ const ItemCount = ({stock, initialValue, onAdd, item}) => {
         }
     }
 
+    const handleClick = () => {
+        if (stock > 0)
+        {
+            onAdd(item, quantity, stock);
+            setQuantity(1);
+        }
+    }
+
     return (
         <>
         <div className="input-group item-count">
             <div className="input-group-prepend">
-                <button className="btn btn-decrement btn-outline-secondary btn-minus" type="button" onClick={() => dec()}>
+                <button className="btn btn-decrement btn-outline-secondary btn-minus" type="button" onClick={dec}>
                     <strong>−</strong>
                 </button>
             </div>
             <span className="form-control amount">{(stock > initialValue) ? quantity : stock}</span>
             <div className="input-group-append">
-                <button className="btn btn-increment btn-outline-secondary btn-plus" type="button" onClick={() => inc()}>
+                <button className="btn btn-increment btn-outline-secondary btn-plus" type="button" onClick={inc}>
                     <strong>+</strong>
                 </button>
             </div>
         </div>
-        <button className='btn btn-primary' title="Agregar al carrito" disabled={!(stock > 0)} onClick={() => {
-            if (stock > 0)
-            {
-                onAdd(item, quantity, stock);
-                setQuantity(1);
-            }
-        }}>
+        <button className='btn btn-primary' title="Agregar al carrito" disabled={!(stock > 0)} onClick={handleClick}>
             <i className='fas fa-cart-plus'></i>
         </button>
         </>
