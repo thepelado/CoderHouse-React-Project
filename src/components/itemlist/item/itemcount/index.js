@@ -32,7 +32,7 @@ const ItemCount = ({stock, initialValue, onAdd, item}) => {
                     <strong>−</strong>
                 </button>
             </div>
-            <span className="form-control amount">{(stock > initialValue) ? quantity : stock}</span>
+            <span className="form-control amount">{quantity}</span>
             <div className="input-group-append">
                 <button disabled={(quantity >= stock)} className="btn btn-increment btn-outline-secondary btn-plus" type="button" onClick={inc}>
                     <strong>+</strong>
