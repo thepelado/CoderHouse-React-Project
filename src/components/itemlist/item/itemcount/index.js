@@ -28,13 +28,13 @@ const ItemCount = ({stock, initialValue, onAdd, item}) => {
         <>
         <div className="input-group item-count">
             <div className="input-group-prepend">
-                <button className="btn btn-decrement btn-outline-secondary btn-minus" type="button" onClick={dec}>
+                <button disabled={(quantity === initialValue)} className="btn btn-decrement btn-outline-secondary btn-minus" type="button" onClick={dec}>
                     <strong>−</strong>
                 </button>
             </div>
             <span className="form-control amount">{(stock > initialValue) ? quantity : stock}</span>
             <div className="input-group-append">
-                <button className="btn btn-increment btn-outline-secondary btn-plus" type="button" onClick={inc}>
+                <button disabled={(quantity >= stock)} className="btn btn-increment btn-outline-secondary btn-plus" type="button" onClick={inc}>
                     <strong>+</strong>
                 </button>
             </div>
