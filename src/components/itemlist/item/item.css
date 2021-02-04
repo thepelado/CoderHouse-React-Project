@@ -1,9 +1,18 @@
 .item {
     padding: 0;
     margin-right: 15px;
+    padding-bottom: 5px;
 }
 
 .item:hover{
+    text-decoration: none;
+}
+
+.item .card {
+    border-bottom: 5px solid transparent;
+}
+
+.item:hover .card {
     border-bottom: 5px solid #06c;
 }
   
@@ -35,6 +44,10 @@
     align-items: flex-start;
     justify-content: flex-end;
 }
+
+.item .card-body .card-title{
+    font-weight: 700;
+}
   
 .item .card-body .card-text .categories {
     display: block;
@@ -52,6 +65,11 @@
     font-size: 18px;
     font-weight: 400;
     letter-spacing: 0;
+    color: #000;
+}
+
+.item .card-body .card-text .stock {
+    color: #000;
 }
 
 .item .card-footer {

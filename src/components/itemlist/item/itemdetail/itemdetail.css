@@ -1,0 +1,79 @@
+.item-detail-container .item-detail {
+    background-color: #FFF;
+    padding: 20px;
+}
+
+.item-detail-container .photo-container {
+    background-color: #FFF;
+    border-right: 10px solid #ececec;
+}
+
+.item-detail-container .item-detail .card-text .price {
+    font-weight: 600;
+    font-size: 40px;
+}
+
+.item-detail-container .item-detail .item-count {
+    display: flex;
+    width: 50%;
+}
+
+.item-detail-container .item-detail .shipping-options {
+    margin-top: 20px;
+}
+
+.item-detail-container .item-detail .shipping-options a:hover {
+    text-decoration: none;
+}
+
+.item-detail-container .item-data {
+    background: #FFF;
+    padding: 0;
+}
+
+.item-detail-container .item-data .nav-link {
+    line-height: 1em;
+    font-size: 1.286em;
+    font-weight: 700;
+    color: #333e48;
+    padding-bottom: 1em;
+    position: relative;
+    display: block;
+}
+
+.item-detail-container .item-data .nav-link.active {
+    border-color: #fff #fff #0066cc;
+    border-bottom: 3px solid #0066cc;
+}
+
+.item-detail-container .item-data .nav-link.active::before {
+    background-color: #0066cc;
+    content: ' ';
+    height: 7px;
+    width: 10px;
+    display: block;
+    position: absolute;
+    bottom: -8px;
+    left: 50%;
+    border-radius: 0 0 10px 10px;
+    transform: translateX(-50%);
+}
+
+.item-detail-container .item-data .nav-link.active::after {
+    content: ' ';
+    border-bottom: 2px solid transparent;
+    display: block;
+    position: absolute;
+    bottom: -1px;
+    width: 100%;
+    z-index: 2;
+}
+
+.item-detail-container .item-data .nav-tabs {
+    justify-content: center;
+    margin-top: 15px;
+}
+
+.item-detail-container .item-data .tab-pane {
+    padding: 15px;
+}
