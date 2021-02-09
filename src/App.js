@@ -24,6 +24,7 @@ function App() {
             <Route exact path="/item/:itemId">
               <ItemDetailContainer/>
             </Route>
+            <Route path="*" children={<div>Not found</div>} />
           </Switch>
       </section>
       <Footer/>
