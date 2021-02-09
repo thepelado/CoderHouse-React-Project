@@ -9,9 +9,10 @@ const Navitems = () => {
                 Categor&iacute;as
                 </a>
                 <div className='dropdown-menu py-0' aria-labelledby='navbarDropdown'>
-                    <Link to={`/category/1`} className='dropdown-item'>Keyboards</Link>
-                    <Link to={`/category/2`} className='dropdown-item'>Monitor</Link>
+                    <Link to={`/category/1`} className='dropdown-item'>Mouse</Link>
+                    <Link to={`/category/2`} className='dropdown-item'>Keyboards</Link>
                     <Link to={`/category/3`} className='dropdown-item'>Webcams</Link>
+                    <Link to={`/category/4`} className='dropdown-item'>Monitores</Link>
                 </div>
             </li>
         </ul>     
