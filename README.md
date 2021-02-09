@@ -1,4 +1,4 @@
-![Life Informática Logo.](/public/cropped-logo_favicon-180x180 "Life Informática")
+![Life Informática Logo.](/public/cropped-logo_favicon-180x180.png "Life Informática")
 ## Coderhouse e-commerce
 
 ### Project by: Cristian Brunacci
