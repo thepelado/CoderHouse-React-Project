@@ -19,7 +19,7 @@ const ItemDetailContainer = () => {
         const timeout = setTimeout( () => { 
             query
             .then( (res) => {
-                let producto = res.find(producto => producto.id == itemId);
+                let producto = res.find(producto => producto.id === Number(itemId));
                 setItem(producto);
                 setIsLoading(false);
             })
