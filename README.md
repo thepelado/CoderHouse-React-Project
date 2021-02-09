@@ -19,6 +19,7 @@ El proyecto esta basado en la web lifeinformatica.com pero con variantes para ir
 
 ## Convenciones
 
+Se buscó realizar los componentes de forma clara, para de esta forma cada uno tenga una responsabilidad definida.
 Se aplico Bootstrap en el proyecto, la idea es migrar a react-bootstrap
 
 ## Features especiales
