@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './cartwidget.css';
 
 const Cartwidget = () => {
@@ -9,16 +10,16 @@ const Cartwidget = () => {
                 </a>
             </li>
             <li className='header-icon user' data-toggle='tooltip' data-title='Wishlist' data-original-title='' title=''>
-                <a href='/#'>
+                <Link to={'/login'}>
                     Entra o registrate <i className='fas fa-user'></i>
-                </a>
+                </Link>
             </li>
             <li className='header-icon cart' data-toggle='tooltip' data-title='Wishlist' data-original-title='' title=''>
-                <a href='/#'>
+                <Link to={'/cart'}>
                     <i className='cart-icon fas fa-shopping-cart'></i>
                     <span className='cart-counter'>0</span>
                     <span className='cart-amount'>$ 0,00</span>
-                </a>
+                </Link>
             </li>            
         </ul>
     );
