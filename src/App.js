@@ -4,6 +4,7 @@ import Footer from './components/footer';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import ItemListContainer from './containers/itemlistcontainer';
 import ItemDetailContainer from './containers/itemdetailcontainer';
+import Cart from './components/cart';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -23,6 +24,9 @@ function App() {
             </Route>
             <Route exact path="/item/:itemId">
               <ItemDetailContainer/>
+            </Route>
+            <Route exact path="/cart">
+              <Cart/>
             </Route>
             <Route path="*" children={<div>Not found</div>} />
           </Switch>

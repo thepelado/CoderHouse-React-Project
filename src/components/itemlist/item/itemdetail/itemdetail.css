@@ -13,9 +13,17 @@
     font-size: 40px;
 }
 
-.item-detail-container .item-detail .item-count {
+.item-detail-container .item-detail .item-actions .item-count {
     display: flex;
     width: 50%;
+}
+
+.item-detail-container .item-detail  .item-actions .btn-add-to-cart {
+    margin-left: 10px;
+}
+
+.item-detail-container .item-detail .item-actions .btn-finish {
+    width: 40%;
 }
 
 .item-detail-container .item-detail .shipping-options {

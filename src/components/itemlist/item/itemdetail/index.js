@@ -1,10 +1,29 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import ItemCount from './itemcount';
 import './itemdetail.css';
 
 const ItemDetail = ({item}) => {
     
     const [quantity, setQuantity] = useState(1);
+    const [isAdd, setIsAdd] = useState(false);
+
+    const inc = () => {
+        if (quantity < item.stock) {
+            setQuantity(quantity + 1);
+        }
+    }
+
+    const dec = () => {
+        if (quantity > 0 ) {
+            setQuantity(quantity - 1);
+        }
+    }
+
+    const onAddToCart = (quantityToAdd) => {
+        setQuantity(1);
+        setIsAdd(true);
+    }
 
     return (
         <>
@@ -26,8 +45,17 @@ const ItemDetail = ({item}) => {
                     <hr/>
                     <span className='stock'><b>Disponibilidad:</b> {item.stock} {item.stock > 1 ? "unidades disponibles" : "última unidad disponible"}.</span>
                     <hr/>
-                    <div className="item-count">
-                        <ItemCount stock={item.stock} initialValue={quantity} item={item} />
+                    <div className="item-actions">
+                        { !isAdd && <>
+                                <ItemCount stock={item.stock} quantity={quantity} inc={inc} dec={dec} />
+                                <button className='btn btn-primary btn-add-to-cart' title="Agregar al carrito" disabled={!(item.stock > 0)} onClick={onAddToCart}>
+                                    <i className='fas fa-cart-plus'></i>
+                                </button>
+                                </>
+                        }
+                        { isAdd && <Link to={'/cart'} className='btn btn-success btn-finish' title="Terminar Compra">
+                            <i className="fas fa-shopping-bag"></i> Terminar mi compra
+                        </Link> }
                     </div>
                     <div className="shipping-options">
                         <p><span><i className="fa fa-shipping-fast"></i> Entrega Express</span> Recíbelo en 2 horas o cuando tú quieras</p>

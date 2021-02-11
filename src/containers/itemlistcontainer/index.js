@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ItemList from '../../components/itemlist';
 import { productos } from '../../data/productos';
+import './itemlistcontainer.css';
 
 const ItemListContainer = () => {
 
@@ -40,14 +41,20 @@ const ItemListContainer = () => {
     if (isLoading)
     {
         return (
-            <p>Cargando...</p>
+            <div className="list-items mt-2 d-flex flex-wrap">
+                <div className="col-12 p-5 text-center">
+                    <div className="spinner-border" role="status">
+                        <span className="sr-only">Cargando...</span>
+                    </div>
+                </div>
+            </div>
         )
     }
 
     return (
         <div className="list-items mt-2 d-flex flex-wrap">
             { categoryId && categoryId > 0 &&
-                <div class="col-12">
+                <div className="col-12">
                     <h2>{categoryTitle}</h2>
                     <hr/>
                 </div>
