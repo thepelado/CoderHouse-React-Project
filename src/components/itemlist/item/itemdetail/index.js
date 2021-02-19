@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
+import { useCartContext } from '../../../../context/cartContext';
 import ItemCount from './itemcount';
 import './itemdetail.css';
 
 const ItemDetail = ({item}) => {
     
+    const { addItem } = useCartContext();
     const [quantity, setQuantity] = useState(1);
     const [isAdd, setIsAdd] = useState(false);
+
+    const history = useHistory();
 
     const inc = () => {
         if (quantity < item.stock) {
@@ -20,7 +24,8 @@ const ItemDetail = ({item}) => {
         }
     }
 
-    const onAddToCart = (quantityToAdd) => {
+    const onAddToCart = () => {
+        addItem(item, quantity); //add item to cartContext
         setQuantity(1);
         setIsAdd(true);
     }
@@ -38,7 +43,7 @@ const ItemDetail = ({item}) => {
                     </div>
                 }
                 <h5 className='card-title'>{item.title}</h5>
-                <p className='card-text'>
+                <div className='card-text'>
                     <span className='categories'>{item.category} / {item.brand}</span>
                     <hr/>
                     <span className='price'>$ {item.price}</span>
@@ -46,16 +51,18 @@ const ItemDetail = ({item}) => {
                     <span className='stock'><b>Disponibilidad:</b> {item.stock} {item.stock > 1 ? "unidades disponibles" : "última unidad disponible"}.</span>
                     <hr/>
                     <div className="item-actions">
-                        { !isAdd && <>
+                        { !isAdd ? 
+                            <>
                                 <ItemCount stock={item.stock} quantity={quantity} inc={inc} dec={dec} />
                                 <button className='btn btn-primary btn-add-to-cart' title="Agregar al carrito" disabled={!(item.stock > 0)} onClick={onAddToCart}>
                                     <i className='fas fa-cart-plus'></i>
                                 </button>
-                                </>
+                            </>
+                        : 
+                            <button className="btn btn-success btn-finish" onClick={()=>history.push('/cart')}>
+                                <i className="fas fa-shopping-bag"></i> Terminar mi compra
+                            </button>
                         }
-                        { isAdd && <Link to={'/cart'} className='btn btn-success btn-finish' title="Terminar Compra">
-                            <i className="fas fa-shopping-bag"></i> Terminar mi compra
-                        </Link> }
                     </div>
                     <div className="shipping-options">
                         <p><span><i className="fa fa-shipping-fast"></i> Entrega Express</span> Recíbelo en 2 horas o cuando tú quieras</p>
@@ -63,7 +70,7 @@ const ItemDetail = ({item}) => {
                         <p><span><i className="far fa-clock"></i> Recogida Express</span> Recógelo en 1 hora</p>
                         <p><span><i className="fa fa-archive"></i> Recogida</span> Recógelo en 1-2 días</p>
 					</div>
-                </p>                
+                </div>                
             </div>
         </div>
         <div className="col-md-12 item-data mt-2">

@@ -140,9 +140,13 @@ footer .copyright {
     line-height: 3em;
 }
 
-footer .copyright a {
+footer .copyright p a {
     font-weight: 700;
     color: #333e48;
+}
+
+footer .copyright p a::after {
+    content: " - ";
 }
 
 footer .copyright .cash-card {
@@ -157,4 +161,18 @@ footer .copyright .cash-card .card-item img {
 
 footer .copyright .cash-card .card-item {
     margin: 0 15px;
+}
+
+@media screen and (max-width: 420px) {
+    footer .copyright p {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: center;
+    }
+
+    footer .copyright p a::after {
+        content: "";
+    }
 }

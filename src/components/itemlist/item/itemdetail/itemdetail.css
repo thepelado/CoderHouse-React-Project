@@ -13,6 +13,10 @@
     font-size: 40px;
 }
 
+.item-detail-container .item-detail .item-actions {
+    display: flex;
+}
+
 .item-detail-container .item-detail .item-actions .item-count {
     display: flex;
     width: 50%;
@@ -84,4 +88,11 @@
 
 .item-detail-container .item-data .tab-pane {
     padding: 15px;
+}
+
+
+@media screen and (max-width: 991px) {
+    .item-detail-container .photo-container {
+        border: unset;
+    }
 }

@@ -4,8 +4,9 @@ header nav .header-icons {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: flex-end;
     margin-bottom: 0px;
+    width: 70%;
 }
   
 header nav .header-icons li {
@@ -13,8 +14,13 @@ header nav .header-icons li {
 }
   
 header nav .header-icons li:first-child {
-    margin-left: 0;
+    margin: 0 auto;
 }
+
+header nav .header-icons li.header-search {
+    width: 60%;
+}
+
 header nav .header-icons li i {
     font-size: 1.55em;
     line-height: .9em;
@@ -50,14 +56,16 @@ header nav .header-icons li.cart .cart-counter {
   
 @media screen and (max-width: 991px) {
     header nav .header-icons li {
-      margin-left: .5em;
-    }
-  
-    header nav .header-icons li.user {
-      text-indent: -9999px;
+        margin-left: .5em;
     }
   
     header nav .header-icons {
-      order: 3;
+        order: 3;
+        margin-right: 0px;
     }
+
+    header nav .header-icons li.cart .cart-amount {
+        display: none;
+    }
+    
 }

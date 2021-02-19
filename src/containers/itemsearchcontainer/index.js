@@ -1,42 +1,42 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 import ItemList from '../../components/itemlist';
 import { productos } from '../../data/productos';
-import './itemlistcontainer.css';
+import './itemsearchcontainer.css';
 
-const ItemListContainer = () => {
+const ItemSearchContainer = () => {
 
     const [ items, setItems ] = useState([]);
-    const [ categoryTitle, setcategoryTitle ] = useState();
+    const [ criterio, setCriterio ] = useState();
     const [ isLoading, setIsLoading ] = useState();
-    const { categoryId } = useParams();
+    const [queryParams, setQueryParams] = useState(new URLSearchParams(useLocation().search));
     
     useEffect(() => {
         setIsLoading(true);
+
         const query = new Promise((resolve, reject) => {
             resolve(productos);
         });
 
         const timeout = setTimeout( () => { 
             query
-            .then( (res) => { 
-                setItems(res);
-                if (categoryId) {
-                    let productsfiltered = res.filter( product => product.category.toLowerCase() === categoryId.toLowerCase());
-                    setItems(productsfiltered);
-                    let title = productsfiltered[0].category;
-                    setcategoryTitle(title);
-                }
-                else {
+            .then( (res) => {
+                setCriterio(queryParams.get("s"));                
+                let filterItems = res.filter( item => item.title.toLowerCase().indexOf(criterio.toLowerCase())>-1);
+                if (filterItems.length > 0) {
+                    setItems(filterItems);
+                } else {
                     setItems(res);
                 }
-                setIsLoading(false);
+                setIsLoading(false);                
             })
             .catch( (err) => console.log(err))
         }, 2000);
 
         return () => clearTimeout(timeout);
-    }, [categoryId]);
+    }, [criterio]);
+
+
 
     if (isLoading)
     {
@@ -53,9 +53,9 @@ const ItemListContainer = () => {
 
     return (
         <div className="list-items mt-2 d-flex flex-wrap">
-            { categoryId && categoryId > 0 &&
+            { criterio &&
                 <div className="col-12">
-                    <h2>{categoryTitle}</h2>
+                    <h2>Resultados de búsqueda: "{criterio}"</h2>
                     <hr/>
                 </div>
             }
@@ -64,4 +64,4 @@ const ItemListContainer = () => {
     )
 }
 
-export default ItemListContainer;
+export default ItemSearchContainer;

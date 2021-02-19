@@ -60,7 +60,7 @@ const Footer = () => {
                 </div>
             </div>
             <div className="d-flex flex-column flex-lg-row justify-content-around align-items-center container-fluid copyright">
-                <p>© <Link to={`/`} >LIFE Informática</Link> - Todos los derechos reservados.</p>
+                <p>© <Link to={`/`} >LIFE Informática</Link><span>Todos los derechos reservados.</span></p>
                 <ul className="d-flex cash-card">
                     <li className="card-item">
                         <img className="stamp" src="/assets/img/mastercard1-min-5d52a09a22f2d.png" alt="Master Card"/>

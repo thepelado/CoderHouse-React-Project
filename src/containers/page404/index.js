@@ -1,3 +1,4 @@
+import FormSearch from '../../components/searchform';
 import './page404.css';
 
 const Page404 = () => {
@@ -13,12 +14,7 @@ const Page404 = () => {
 						<p className="lead">Vaya, parece que no hemos encontrado nada aquí. Prueba a buscar algo o mira los enlaces más abajo.</p>
                         <hr className="m-y-2"/>
                         <div className="sub-form-row inner-bottom-xs busqueda404">
-                            <div className="widget woocommerce widget_product_search">
-                                <form role="search" method="get" className="search-form">
-                                    <input type="search" className="search-field" placeholder="Buscar productos…" value="" name="txt-search"></input>
-                                    <button type="submit" value="Buscar">Buscar</button>
-                                </form>
-                            </div>
+                            <FormSearch/>
                         </div>
                     </div>
                 </div>

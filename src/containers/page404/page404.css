@@ -20,36 +20,6 @@
     font-size: 1.2em;
 }
 
-.page-404 .text .search-form .search-field {
-    width: 70%;
-    background-color: #FFF;
-    padding: .857em 1.214em;
-    color: #818181;
-    outline: 0;
-    border: 0;
-    -webkit-appearance: none;
-    border-radius: 1.571em;
-    box-sizing: border-box;
-    border-width: 1px;
-    border-style: solid;
-    border-color: #ddd;
-    height: 47px;
-}
-
-.page-404 .text .search-form button {
-    background-color: #0066cc;
-    color: white;
-    border-radius: 1.571em;
-    margin-left: 20px;
-    padding: 10px 30px;
-    font-size: .875rem;
-    border-width: 0;
-    display: inline-block;
-    border-color: #efecec;
-    transition: all .2s ease-in-out;
-    height: 47px;
-}  
-
 @media screen and (max-width: 691px) {
     .page-404 .logo {
         max-width: unset; 
@@ -59,9 +29,5 @@
 
     .page-404 .text {
         padding-top: 2em;
-    }
-
-    .page-404 .text .search-form .search-field {
-        width: 60%;
     }
 }
