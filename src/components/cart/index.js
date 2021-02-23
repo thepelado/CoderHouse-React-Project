@@ -26,12 +26,12 @@ const Cart = () => {
                         <table className="table product mt-3">
                             <thead>
                                 <tr>
-                                    <th class="product-remove">&nbsp;</th>
-                                    <th class="product-thumbnail">&nbsp;</th>
-                                    <th class="product-name">Producto</th>
-                                    <th class="product-price">Precio</th>
-                                    <th class="product-quantity">Cantidad</th>
-                                    <th class="product-subtotal">Total</th>
+                                    <th className="product-remove">&nbsp;</th>
+                                    <th className="product-thumbnail">&nbsp;</th>
+                                    <th className="product-name">Producto</th>
+                                    <th className="product-price">Precio</th>
+                                    <th className="product-quantity">Cantidad</th>
+                                    <th className="product-subtotal">Total</th>
                                 </tr>
                             </thead>
                             <tbody>

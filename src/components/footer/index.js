@@ -3,6 +3,10 @@ import './footer.css';
 
 const Footer = () => {
 
+    const handlerSubscription = (e) => {
+        console.log(e.target.value);
+    }
+
     return (
         <footer>
             <div className="d-flex flex-column flex-lg-row justify-content-center advantages-container">
@@ -35,7 +39,7 @@ const Footer = () => {
                             <span className="newsletter-marketing-text">...e infórmate de nuestras ofertas!</span>
                         </div>
                         <div className="d-flex flex-row align-items-center newsletter-form">
-                            <input type="email" className="form-control txt-email" data-inputmask="" value="" placeholder="Email" aria-invalid="false"/>                        
+                            <input type="email" className="form-control txt-email" onChange={handlerSubscription} value="" placeholder="Email" aria-invalid="false"/>                        
                             <button type="button" className="form-control btn-suscribirse">Sucríbete!</button>
                         </div>
                     </div>

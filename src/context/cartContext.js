@@ -8,6 +8,7 @@ const CartProvider = ({ defaultValue = [], children }) => {
     const cartLocalStorage = JSON.parse(localStorage.getItem('cart'));
     const [cart, setCart] = useState(cartLocalStorage && cartLocalStorage.length > 0 ? cartLocalStorage : defaultValue);
     cart.totalPrice = cart.length > 0 ? cart.reduce((total, cartItem) => total + (cartItem.qty * cartItem.item.price), 0) : '0,00';
+    cart.count = cart.length > 0 ? cart.reduce((total, cartItem) => total + cartItem.qty, 0) : '0';
 
     const addItem = async(item, qty) => {
         if (!isInCart(item.id)) {

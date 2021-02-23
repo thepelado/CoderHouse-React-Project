@@ -20,13 +20,16 @@ const Cartwidget = () => {
                     <i className='fas fa-user'></i>
                 </Link>
             </li>
-            <li className='header-icon cart' data-toggle='tooltip' data-title='Shopping Cart' data-original-title='' title=''>
-                <Link to={'/cart'}>
-                    <i className='cart-icon fas fa-shopping-cart'></i>
-                    <span className='cart-counter'>{cart.length}</span>
-                    <span className='cart-amount'>$ {cart.totalPrice}</span>
-                </Link>
-            </li>            
+            <>
+                { cart.length > 0 && <li className='header-icon cart' data-toggle='tooltip' data-title='Shopping Cart' data-original-title='' title=''>
+                    <Link to={'/cart'}>
+                        <i className='cart-icon fas fa-shopping-cart'></i>
+                        <span className='cart-counter'>{cart.count}</span>
+                        <span className='cart-amount'>$ {cart.totalPrice}</span>
+                    </Link>
+                </li>
+                }
+            </>
         </ul>
     );
 }
