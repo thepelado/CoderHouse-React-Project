@@ -34,7 +34,7 @@ const CartProvider = ({ defaultValue = [], children }) => {
     const clearCart = () => setCart([]);
 
     const isInCart = (id) => {
-        return cart.findIndex(cartItem => cartItem.item.id == id)>=0? true:false;
+        return cart.some(cartItem => cartItem.item.id == id)? true:false;
     }
 
     useEffect(() => {
