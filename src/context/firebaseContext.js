@@ -20,10 +20,8 @@ const FirebaseProvider = ({ children }) => {
     }
 
     const getItemsByTerm = (term) => {
-        return db.collection('ITEMS')
-                .orderBy('title')
-                .startAt(term).endAt(term+'\uf8ff')
-                .get();
+        console.log(term);
+        return db.collection('ITEMS').orderBy('category').startAt(term).endAt(term+'\uf8ff').get();
     }
 
     const addItem = async () => {

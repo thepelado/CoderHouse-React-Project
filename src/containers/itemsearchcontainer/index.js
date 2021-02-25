@@ -17,7 +17,6 @@ const ItemSearchContainer = () => {
         setCriterio(queryParams.get("s"));
         if (criterio) {
             getItemsByTerm(criterio).then((querySnapshot) => {
-                console.log(querySnapshot);
                 if (querySnapshot.length === 0) {
                     console.log('Error');
                 } else {
