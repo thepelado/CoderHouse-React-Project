@@ -1,3 +1,4 @@
+import NumberFormat from 'react-number-format';
 import { useCartContext } from '../../../context/cartContext';
 import { Link } from 'react-router-dom';
 import './cartitem.css';
@@ -21,13 +22,17 @@ const CartItem = ({cartItem}) => {
                 <Link to={`/item/${cartItem.item.id}`} className="text-secondary">{cartItem.item.title}</Link>
             </td>
             <td className="align-middle">
-                <strong>$ {cartItem.item.price}</strong>
+                <strong>
+                    <NumberFormat value={cartItem.item.price } decimalSeparator={','} displayType={'text'} thousandSeparator={'.'} prefix={'$'} />
+                </strong>
             </td>
             <td className="align-middle">
                 <strong>{cartItem.qty}</strong>
             </td> 
             <td className="align-middle">
-                <strong>$ {cartItem.qty * cartItem.item.price }</strong>
+                <strong>
+                    <NumberFormat value={cartItem.qty * cartItem.item.price } decimalSeparator={','} displayType={'text'} thousandSeparator={'.'} prefix={'$'} />
+                </strong>
             </td> 
         </tr>
     )

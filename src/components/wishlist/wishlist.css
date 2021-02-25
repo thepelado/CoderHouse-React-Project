@@ -1,0 +1,34 @@
+.wishlist-resume {
+    min-height: 300px;
+}
+
+.wishlist-resume h3 {
+    font-size: 1.786em;
+    line-height: 1.6em;
+    display: flex;
+    align-items: flex-end;
+    width: inherit;
+    position: relative;
+    padding-bottom: .4em;
+    border-bottom: 1px solid #dadada;
+    margin-bottom: 1.36em;
+    margin-bottom: .5em;
+}
+
+.wishlist-resume h3::after {
+    content: ' ';
+    border-bottom: 3px solid transparent;
+    display: block;
+    width: 18%;
+    position: absolute;
+    bottom: -1px;
+    border-color: #06c;
+}
+
+
+.wishlist-resume .product thead tr th {
+    color: #333e48;
+    border: none;
+    border-bottom: 1px solid #ececec;
+}
+

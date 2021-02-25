@@ -1,9 +1,8 @@
 export const productos = [
     {
-        id: 1,
         title: "Logitech B100 negro – Mouse",
         brand: "Logitech",
-        categoryId: 1,
+        categoryID: 1,
         category: "Mouse",
         stock: 10,
         price: "600",
@@ -12,10 +11,9 @@ export const productos = [
         sku: "RALOG004"
     },
     {
-        id: 2,
         title: "Cooler Master MK850 RGB MX red Aimpad – Teclado",
         brand: "Cooler Master",
-        categoryId: 2,
+        categoryID: 2,
         category: "Teclados",
         stock: 10,
         price: "9599",
@@ -24,10 +22,9 @@ export const productos = [
         sku: "TECOL019"
     },
     {
-        id: 3,
         title: "Logitech C922 Pro Stream – Webcam",
         brand: "Logitech",
-        categoryId: 3,
+        categoryID: 3,
         category: "Webcams",
         stock: 10,
         price: "12500",
@@ -36,11 +33,10 @@ export const productos = [
         sku: "WCLOG010"
     },
     {
-        id: 4,
         title: "Monitor 27p Benq Zowie Xl2731 144hz Gamer Full Hd",
         brand: "Benq",
-        categoryId: 4,
-        category: "Monitor",
+        categoryID: 4,
+        category: "Monitores",
         stock: 10,
         price: "84800",
         photo: "https://media.lifeinformatica.com/contents/Life/BENQ-9H.LGMLB.QBE/imgs/9H.LGMLB.QBE-01.jpg",
@@ -48,10 +44,9 @@ export const productos = [
         sku: "TFBEN082"
     },
     {
-        id: 5,
         title: "Ducky One 2 Mini Pure White RGB MX Brown Layout ES – Teclado",
         brand: "Ducky",
-        categoryId: 2,
+        categoryID: 2,
         category: "Teclados",
         stock: 5,
         price: "7990",

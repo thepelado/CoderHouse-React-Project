@@ -1,3 +1,4 @@
+import NumberFormat from 'react-number-format';
 import { useCartContext } from '../../context/cartContext';
 import { Link } from 'react-router-dom';
 import CartItem from './cartitem';
@@ -41,6 +42,12 @@ const Cart = () => {
                                     )
                                 }
                             </tbody>
+                            <tfoot>
+                                <th colSpan="5" className="text-right">Subtotal</th>
+                                <th className="">
+                                    <NumberFormat value={cart.totalPrice} decimalSeparator={','} displayType={'text'} thousandSeparator={'.'} prefix={'$'} />
+                                </th>
+                            </tfoot>
                         </table>
                         <div className="d-flex justify-content-center my-3">
                             <button className="btn btn-danger" onClick={handleClearCart}>Vaciar carro de compras</button>

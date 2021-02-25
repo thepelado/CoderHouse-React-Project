@@ -3,6 +3,12 @@
     padding: 20px;
 }
 
+.item-detail-container .item-detail .btn-wishList{
+    background: transparent;
+    border: none;
+    font-size: 30px;
+}
+
 .item-detail-container .photo-container {
     background-color: #FFF;
     border-right: 10px solid #ececec;

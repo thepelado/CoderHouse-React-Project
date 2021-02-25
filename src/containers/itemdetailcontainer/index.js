@@ -1,34 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import ItemDetail from '../../components/itemlist/item/itemdetail';
+import { useFirebaseContext } from '../../context/firebaseContext';
 import './itemdetailcontainer.css';
-import { productos } from '../../data/productos';
 import Page404 from '../page404';
 
 const ItemDetailContainer = () => {
 
     const [ item, setItem ] = useState({});
     const [ isLoading, setIsLoading ] = useState();
+    const { getItemByID, addItem } = useFirebaseContext();
     const { itemId } = useParams();
-    
+ 
     useEffect(() => {
         setIsLoading(true);
-        const query = new Promise((resolve, reject) => {
-            resolve(productos);
-        });
-
-        const timeout = setTimeout( () => { 
-            query
-            .then( (res) => {
-                let producto = res.find(producto => producto.id === Number(itemId));
-                setItem(producto);
-                setIsLoading(false);
-            })
-            .catch( (err) => console.log(err))
-        }, 2000);
-
-        return () => clearTimeout(timeout);
-    }, [itemId]);
+        getItemByID(itemId).then((querySnapshot) => {
+            setItem({id: querySnapshot.id, ...querySnapshot.data()});
+        }).catch(error => console.log(error)).finally(() => setIsLoading(false))
+    }, []);
 
         if (isLoading)
         {

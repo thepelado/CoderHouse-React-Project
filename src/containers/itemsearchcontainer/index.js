@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import ItemList from '../../components/itemlist';
-import { productos } from '../../data/productos';
+import { useFirebaseContext } from '../../context/firebaseContext';
 import './itemsearchcontainer.css';
 
 const ItemSearchContainer = () => {
@@ -10,30 +10,25 @@ const ItemSearchContainer = () => {
     const [ criterio, setCriterio ] = useState();
     const [ isLoading, setIsLoading ] = useState();
     const [queryParams, setQueryParams] = useState(new URLSearchParams(useLocation().search));
+    const { getItemsByTerm } = useFirebaseContext();
     
     useEffect(() => {
         setIsLoading(true);
-
-        const query = new Promise((resolve, reject) => {
-            resolve(productos);
-        });
-
-        const timeout = setTimeout( () => { 
-            query
-            .then( (res) => {
-                setCriterio(queryParams.get("s"));                
-                let filterItems = res.filter( item => item.title.toLowerCase().indexOf(criterio.toLowerCase())>-1);
-                if (filterItems.length > 0) {
-                    setItems(filterItems);
+        setCriterio(queryParams.get("s"));
+        if (criterio) {
+            getItemsByTerm(criterio).then((querySnapshot) => {
+                console.log(querySnapshot);
+                if (querySnapshot.length === 0) {
+                    console.log('Error');
                 } else {
-                    setItems(res);
+                    if (querySnapshot.docs.length > 0) {                        
+                        setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+                    } else {
+                        setItems([]);
+                    }
                 }
-                setIsLoading(false);                
-            })
-            .catch( (err) => console.log(err))
-        }, 2000);
-
-        return () => clearTimeout(timeout);
+            }).catch(error => console.log(error)).finally(() => setIsLoading(false))
+        }
     }, [criterio]);
 
 

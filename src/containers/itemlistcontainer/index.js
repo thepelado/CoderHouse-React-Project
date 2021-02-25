@@ -1,42 +1,44 @@
 import React, { useState, useEffect } from 'react';
+import { useFirebaseContext } from '../../context/firebaseContext';
 import { useParams } from 'react-router-dom';
 import ItemList from '../../components/itemlist';
-import { productos } from '../../data/productos';
 import './itemlistcontainer.css';
 
 const ItemListContainer = () => {
 
     const [ items, setItems ] = useState([]);
-    const [ categoryTitle, setcategoryTitle ] = useState();
+    const [ categoryTitle, setCategoryTitle ] = useState();
     const [ isLoading, setIsLoading ] = useState();
-    const { categoryId } = useParams();
+    const { category } = useParams();
+    const { getAllItems, getItemsByCategory } = useFirebaseContext();
     
     useEffect(() => {
         setIsLoading(true);
-        const query = new Promise((resolve, reject) => {
-            resolve(productos);
-        });
-
-        const timeout = setTimeout( () => { 
-            query
-            .then( (res) => { 
-                setItems(res);
-                if (categoryId) {
-                    let productsfiltered = res.filter( product => product.category.toLowerCase() === categoryId.toLowerCase());
-                    setItems(productsfiltered);
-                    let title = productsfiltered[0].category;
-                    setcategoryTitle(title);
+        if (category) {
+            setCategoryTitle(category);
+            getItemsByCategory(category).then((querySnapshot) => {
+                if (querySnapshot.length === 0) {
+                    console.log('Error');
+                } else {
+                    if (querySnapshot.docs.length > 0) {                        
+                        setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+                    } else {
+                        setItems([]);
+                    }
                 }
-                else {
-                    setItems(res);
+            }).catch(error => console.log(error)).finally(() => setIsLoading(false))
+        } else {
+            getAllItems().then((querySnapshot) => {
+                if (querySnapshot.length === 0) {
+                    console.log('No hay datos');
+                    setIsLoading(false)
+                } else {
+                    setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })))
+                    setIsLoading(false)
                 }
-                setIsLoading(false);
-            })
-            .catch( (err) => console.log(err))
-        }, 2000);
-
-        return () => clearTimeout(timeout);
-    }, [categoryId]);
+            }).catch(error => console.log(error));
+        }
+    }, [category]);
 
     if (isLoading)
     {
@@ -53,13 +55,20 @@ const ItemListContainer = () => {
 
     return (
         <div className="list-items mt-2 d-flex flex-wrap">
-            { categoryId && categoryId > 0 &&
+            { category &&
                 <div className="col-12">
                     <h2>{categoryTitle}</h2>
                     <hr/>
                 </div>
             }
-            <ItemList itemsData={items}/>
+            { items.length > 0 ?
+                    <ItemList itemsData={items}/>
+                :
+                    <div className="col-12 text-center">
+                        <h2>No hay productos en esta categoría</h2> 
+                    </div>                    
+            }
+
         </div>
     )
 }

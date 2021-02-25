@@ -1,4 +1,5 @@
 import React from 'react';
+import NumberFormat from 'react-number-format';
 import { Link } from 'react-router-dom';
 import './item.css';
 
@@ -19,7 +20,9 @@ const Item = ({item}) => {
                     <h5 className='card-title'>{item.title}</h5>
                     <p className='card-text'>
                         <span className='categories'>{item.category} / {item.brand}</span>
-                        <span className='price'>$ {item.price}</span>
+                        <span className='price'>
+                            <NumberFormat isNumericString={true} decimalScale={2} value={ item.price } decimalSeparator={','} displayType={'text'} thousandSeparator={'.'} prefix={'$'} />
+                        </span>
                         <span className='stock'>{item.stock} unidades disponibles</span>
                     </p>
                 </div>
