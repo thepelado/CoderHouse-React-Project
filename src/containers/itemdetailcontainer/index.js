@@ -4,12 +4,13 @@ import ItemDetail from '../../components/itemlist/item/itemdetail';
 import { useFirebaseContext } from '../../context/firebaseContext';
 import './itemdetailcontainer.css';
 import Page404 from '../page404';
+import { Col, Row, Container } from 'react-bootstrap';
 
 const ItemDetailContainer = () => {
 
     const [ item, setItem ] = useState({});
     const [ isLoading, setIsLoading ] = useState();
-    const { getItemByID, addItem } = useFirebaseContext();
+    const { getItemByID } = useFirebaseContext();
     const { itemId } = useParams();
  
     useEffect(() => {
@@ -22,17 +23,17 @@ const ItemDetailContainer = () => {
         if (isLoading)
         {
             return (
-                <div className="row item-detail-container pt-3 pb-5">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col-12 p-5 text-center">
+                <Row className="item-detail-container pt-3 pb-5">
+                    <Container>
+                        <Row>
+                            <Col xs={12} className="p-5 text-center">
                                 <div className="spinner-border" role="status">
                                     <span className="sr-only">Cargando...</span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                            </Col>
+                        </Row>
+                    </Container>
+                </Row>
             )
         }
         if (!item)
@@ -42,13 +43,11 @@ const ItemDetailContainer = () => {
             )
         }
         return (
-            <div className="row item-detail-container pt-3 pb-5">
-                <div className="container">
-                    <div className="row">
-                        <ItemDetail item={item} />
-                    </div>
-                </div>
-            </div>
+            <Row className="item-detail-container pt-3 pb-5">
+                <Container>
+                    <ItemDetail item={item} />
+                </Container>
+            </Row>
         )
 }
 

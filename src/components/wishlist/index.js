@@ -2,23 +2,27 @@ import { useWishListContext } from '../../context/wishListContext';
 import { Link } from 'react-router-dom';
 import WishListItem from './wishlistitem';
 import './wishlist.css';
+import { Col, Row, Container, Table, Button } from 'react-bootstrap';
 
 const WishList = () => {
     const { wishList } = useWishListContext();
 
     return (
-        <div className="container wishlist-resume">
-            <div className="row mt-5 mb-5 justify-content-center">
+        <Container className="wishlist-resume">
+            <Row className="mt-5 mb-5 justify-content-center">
                 {wishList.length == 0 ?
-                    <div className="col-md-12  text-center">
+                    <Col xs={12} className="text-center">
 
                         <i className="fas fa-shopping-wishlist fa-5x" style={{ "color": "#E8E9EB" }}></i>
                         <h4 className="my-4">Su lista de deseos está vacía. ¡Sigue explorando nuestra tienda para encontrar un producto ideal para ti!</h4>
-                        <Link to="/" className="text-white">  <button type="button" className="btn btn-danger">¡Sigue comprando!</button> </Link>
-                    </div>
+                        <Link to="/" className="text-white">                            
+                            <Button variant="danger">¡Sigue comprando!</Button>
+                        </Link>
+                    </Col>
                 :
-                    <div className="col-md-12">
-                        <table className="table product mt-3">
+                    <Col xs={12}>
+                        <h3>LISTA DE DESEOS</h3>
+                        <Table responsive className="product mt-3">
                             <thead>
                                 <tr>
                                     <th className="product-remove">&nbsp;</th>
@@ -34,11 +38,11 @@ const WishList = () => {
                                     )
                                 }
                             </tbody>
-                        </table>
-                    </div>
+                        </Table>
+                    </Col>
                 }
-            </div>
-        </div>
+            </Row>
+        </Container>
     );
 }
 

@@ -10,6 +10,9 @@ const CartProvider = ({ defaultValue = [], children }) => {
     cart.totalPrice = cart.length > 0 ? cart.reduce((total, cartItem) => total + (cartItem.qty * cartItem.item.price), 0) : '0,00';
     cart.count = cart.length > 0 ? cart.reduce((total, cartItem) => total + cartItem.qty, 0) : '0';
 
+    const userLocalStorage = JSON.parse(localStorage.getItem('user'));
+    const [loggedUser, setLoggedUser] = useState(userLocalStorage? userLocalStorage : defaultValue);
+
     const addItem = async(item, qty) => {
         if (!isInCart(item.id)) {
             const newCart = [...cart, { item:item, qty: qty }];
@@ -37,12 +40,17 @@ const CartProvider = ({ defaultValue = [], children }) => {
         return cart.some(cartItem => cartItem.item.id == id);
     }
 
+    const setUser = (user) => {
+        setLoggedUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+    }
+
     useEffect(() => {
         localStorage.setItem('cart', JSON.stringify(cart));
-    }, [cart]);
+    }, [cart, loggedUser]);
 
     return (
-        <CartContext.Provider value={{cart, addItem, removeItem, clearCart}}>
+        <CartContext.Provider value={{cart, loggedUser, addItem, removeItem, clearCart, setUser}}>
             {children}
         </CartContext.Provider>
     )

@@ -1,0 +1,67 @@
+.form-login {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 1em 0;
+    padding-right: .9375rem;
+    padding-left: .9375rem;
+}
+
+.form-login .before-login-text {
+    font-weight: 600;
+}
+
+.form-login .form-row {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.form-login .form-row label,
+.form-login .form-row input {
+    width: 100%;
+    text-align: left;
+}
+
+.form-login input[type=email],
+.form-login input[type=password],
+.form-login input[type=search],
+.form-login input[type=text],
+.form-login input[type=url],
+.form-login textarea {
+    padding: .857em 1.214em;
+    background-color: transparent;
+    color: #818181;
+    background: #FFF;
+    line-height: 1.286em;
+    outline: 0;
+    border: 0;
+    -webkit-appearance: none;
+    border-radius: 1.571em;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ddd;
+}
+
+.form-login .form-row.error input[type=email],
+.form-login .form-row.error input[type=password],
+.form-login .form-row.error input[type=search],
+.form-login .form-row.error input[type=text],
+.form-login .form-row.error input[type=url],
+.form-login .form-row.error textarea {
+    border-color: #ff0000;
+}
+
+.form-login .form-row.error span {
+    color: #ff0000;
+}
+
+.form-login .btn-login {
+    background-color: #0066cc;
+    border-color: #0066cc;
+}

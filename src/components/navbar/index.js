@@ -1,20 +1,19 @@
 import Navlogo from './navlogo/';
 import Navitems from './navitems/';
 import Cartwidget from './cartwidget/';
+import { Navbar as NavbarBootstrap, Nav } from "react-bootstrap";
 import './navbar.css';
 
 const Navbar = () => {
     return(
-        <nav className='navbar navbar-expand-lg'>
+        <NavbarBootstrap variant="dark" expand="lg" className="navbar">
             <Navlogo/>
-            <button className='navbar-toggler' type='button' data-toggle='collapse' data-target='#navbarSupportedContent' aria-controls='navbarSupportedContent' aria-expanded='false' aria-label='Toggle navigation'>
-                <span className='navbar-toggler-icon'></span>
-            </button>
-            <div className='collapse navbar-collapse' id='navbarSupportedContent'>
+            <NavbarBootstrap.Toggle aria-controls="basic-navbar-nav" />
+            <NavbarBootstrap.Collapse id="basic-navbar-nav">
                 <Navitems/>
-            </div>
+            </NavbarBootstrap.Collapse>
             <Cartwidget/>
-        </nav>
+        </NavbarBootstrap>
     );
 }
 

@@ -1,61 +1,100 @@
 import NumberFormat from 'react-number-format';
+import { useFirebaseContext } from '../../context/firebaseContext';
 import { useCartContext } from '../../context/cartContext';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import CartItem from './cartitem';
+import { Col, Row, Container, Table, Button } from 'react-bootstrap';
 import './cart.css';
 
-const Cart = () => {
-    const { cart, clearCart } = useCartContext();
 
+const Cart = () => {
+    const history = useHistory();
+    const { cart, loggedUser, clearCart } = useCartContext();
+    const { updateStock, createOrder } = useFirebaseContext();
     const handleClearCart = () => {
         clearCart();
     }
 
-    return (
-        <div className="container cart-resume">
-            <div className="row mt-5 mb-5 justify-content-center">
-                {cart.length == 0 ?
-                    <div className="col-md-12  text-center">
+    const handlePushOrder = () => {
+        let newOrder = { buyer: loggedUser, items: [...cart], total: cart.totalPrice}
+        //Actualizo el stock de los productos
+        updateStock(cart).then( (result) => {
+            //Ya actualizado el stock, almaceno la orden de compra
+            return createOrder(newOrder);
+        })
+        .then( (order) => {
+            //Borro el carrito
+            clearCart();           
+            //Redirijo al componente para mostrar la orden de compra
+            history.push(`/order/${order.id}`)
+        })
+        .catch( (error) => console.error(error));
+    }
 
+    return (
+        <Container className="cart-resume">
+            <Row className="mt-5 mb-5 justify-content-center">
+                {cart.length == 0 ?
+                    <Col xs={12} className="text-center">
                         <i className="fas fa-shopping-cart fa-5x" style={{ "color": "#E8E9EB" }}></i>
                         <h4 className="my-4">El carro está vacío. ¡Sigue explorando nuestra tienda para encontrar un producto ideal para ti!</h4>
-                        <Link to="/" className="text-white">  <button type="button" className="btn btn-danger">¡Sigue comprando!</button> </Link>
-                    </div>
+                        <Link to="/" className="text-white">  
+                            <Button variant="danger">¡Sigue comprando!</Button>
+                        </Link>
+                    </Col>
                 :
-                    <div className="col-md-12">
-                        <h3>RESUMEN DE LA COMPRA</h3>
-                        <table className="table product mt-3">
-                            <thead>
-                                <tr>
-                                    <th className="product-remove">&nbsp;</th>
-                                    <th className="product-thumbnail">&nbsp;</th>
-                                    <th className="product-name">Producto</th>
-                                    <th className="product-price">Precio</th>
-                                    <th className="product-quantity">Cantidad</th>
-                                    <th className="product-subtotal">Total</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    cart.map((cartItem, index) => 
-                                        <CartItem cartItem={cartItem} key={index}></CartItem>
-                                    )
-                                }
-                            </tbody>
-                            <tfoot>
-                                <th colSpan="5" className="text-right">Subtotal</th>
-                                <th className="">
-                                    <NumberFormat value={cart.totalPrice} decimalSeparator={','} displayType={'text'} thousandSeparator={'.'} prefix={'$'} />
-                                </th>
-                            </tfoot>
-                        </table>
-                        <div className="d-flex justify-content-center my-3">
-                            <button className="btn btn-danger" onClick={handleClearCart}>Vaciar carro de compras</button>
-                        </div>
-                    </div>
+                    <Col xs={12}>
+                        <Row>
+                            <h3>RESUMEN DE LA COMPRA</h3>
+                            <Table responsive className="product mt-3">
+                                <thead>
+                                    <tr>
+                                        <th className="product-remove">&nbsp;</th>
+                                        <th className="product-thumbnail">&nbsp;</th>
+                                        <th className="product-name">Producto</th>
+                                        <th className="product-price">Precio</th>
+                                        <th className="product-quantity">Cantidad</th>
+                                        <th className="product-subtotal">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        cart.map((cartItem, index) => 
+                                            <CartItem cartItem={cartItem} key={index}></CartItem>
+                                        )
+                                    }
+                                </tbody>
+                                <tfoot>
+                                    <tr>
+                                        <td colSpan="5" className="text-right">Subtotal</td>
+                                        <td className="cart-total">
+                                            <NumberFormat value={cart.totalPrice} decimalSeparator={','} displayType={'text'} thousandSeparator={'.'} prefix={'$'} />
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </Table>
+                        </Row>
+                        { !loggedUser.id?
+                            <>
+                                <Row className="justify-content-center my-3">
+                                    <p>¿Todavía no eres cliente? <Link to={'/login?tab=register'} className="btn btn-success">Registrate</Link></p> 
+                                </Row>
+                            </>
+                            :
+                            <>
+                                <Row className="justify-content-center my-3">
+                                    <Button variant="success" onClick={handlePushOrder}>Terminar compra</Button>
+                                </Row>
+                            
+                                <Row className="justify-content-center my-3">
+                                    <Button variant="danger" onClick={handleClearCart}>Vaciar carro de compras</Button>
+                                </Row>
+                            </>                            
+                        }
+                    </Col>
                 }
-            </div>
-        </div>
+            </Row>
+        </Container>
     );
 }
 

@@ -1,8 +1,8 @@
-.cart-resume {
+.perfil-container {
     min-height: 300px;
 }
 
-.cart-resume h3 {
+.perfil-container h3 {
     font-size: 1.786em;
     line-height: 1.6em;
     display: flex;
@@ -15,7 +15,7 @@
     margin-bottom: .5em;
 }
 
-.cart-resume h3::after {
+.perfil-container h3::after {
     content: ' ';
     border-bottom: 3px solid transparent;
     display: block;
@@ -26,7 +26,7 @@
 }
 
 
-.cart-resume .product thead tr th {
+.perfil-container .product thead tr th {
     color: #333e48;
     border: none;
     border-bottom: 1px solid #ececec;

@@ -1,20 +1,21 @@
 import React from 'react';
 import './itemcount.css';
+import { Button } from 'react-bootstrap';
 
 const ItemCount = ({stock, quantity, inc, dec}) => {
 
     return (
             <div className="input-group item-count">
                 <div className="input-group-prepend">
-                    <button disabled={(quantity === 1)} className="btn btn-decrement btn-outline-secondary btn-minus" type="button" onClick={dec}>
+                    <Button disabled={(quantity === 1)} variant="outline-secondary" className="btn-minus" onClick={dec}>
                         <strong>−</strong>
-                    </button>
+                    </Button>
                 </div>
                 <span className="form-control amount">{quantity}</span>
                 <div className="input-group-append">
-                    <button disabled={(quantity >= stock)} className="btn btn-increment btn-outline-secondary btn-plus" type="button" onClick={inc}>
+                    <Button disabled={(quantity >= stock)} variant="outline-secondary" className="btn-plus" onClick={inc}>
                         <strong>+</strong>
-                    </button>
+                    </Button>
                 </div>
             </div>
     )

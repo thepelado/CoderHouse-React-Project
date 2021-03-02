@@ -1,21 +1,17 @@
 import { Link } from 'react-router-dom';
+import { Nav, NavDropdown } from "react-bootstrap";
 import './navitems.css';
 
 const Navitems = () => {
     return(
-        <ul className='navbar-nav mr-auto'>
-            <li className='nav-item dropdown'>
-                <a className='nav-link dropdown-toggle' href='/#' id='navbarDropdown' role='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                Categor&iacute;as
-                </a>
-                <div className='dropdown-menu py-0' aria-labelledby='navbarDropdown'>
-                    <Link to={`/category/Mouse`} className='dropdown-item'>Mouse</Link>
-                    <Link to={`/category/Teclados`} className='dropdown-item'>Keyboards</Link>
-                    <Link to={`/category/Webcams`} className='dropdown-item'>Webcams</Link>
-                    <Link to={`/category/Monitores`} className='dropdown-item'>Monitores</Link>
-                </div>
-            </li>
-        </ul>     
+        <Nav className="mr-auto">
+            <NavDropdown title="Categor&iacute;as" id="collasible-nav-dropdown">
+                <NavDropdown.Item href="/category/Mouse">Mouse</NavDropdown.Item>
+                <NavDropdown.Item href="/category/Teclados">Keyboards</NavDropdown.Item>
+                <NavDropdown.Item href="/category/Webcams">Webcams</NavDropdown.Item>
+                <NavDropdown.Item href="/category/Monitores">Monitores</NavDropdown.Item>
+            </NavDropdown>
+        </Nav>
     );
 }
 

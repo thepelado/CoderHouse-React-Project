@@ -1,11 +1,16 @@
 import { useCartContext } from '../../../context/cartContext';
 import NumberFormat from 'react-number-format';
-import { Link } from 'react-router-dom';
+import { DropdownButton, Dropdown } from 'react-bootstrap';
+import { Link, useHistory } from "react-router-dom";
 import SearchForm from '../../searchform/';
 import './cartwidget.css';
 
 const Cartwidget = () => {
-    const { cart } = useCartContext();
+    const { cart, loggedUser, setUser } = useCartContext();
+    const history = useHistory();
+    const cerrarSesion = () => setUser([]);
+    const perfilHandle = () => history.push('/perfil');
+
     return(
         <ul className='header-icons'>
             <li className="d-none d-md-flex header-search">
@@ -17,9 +22,21 @@ const Cartwidget = () => {
                 </Link>
             </li>
             <li className='header-icon user'>
-                <Link to={'/login'} title='Datos del usuario'>
-                    <i className='fas fa-user'></i>
-                </Link>
+                { !loggedUser.id?
+                    <Link to={'/login'} title='Datos del usuario'>
+                        <i className='fas fa-user'></i> Invitado
+                    </Link>
+                :
+                    <div className="user-options">
+                        <i className='fas fa-user'></i> {loggedUser.nombre}
+                        <DropdownButton id="dropdown-item-button" title="" menuAlign="right">
+                            <Dropdown.Item as="button" onClick={perfilHandle}>
+                                Perfil
+                            </Dropdown.Item>
+                            <Dropdown.Item as="button" onClick={cerrarSesion}>Cerrar Sesión</Dropdown.Item>                            
+                        </DropdownButton>
+                    </div>
+                }
             </li>
             <>
                 { cart.length > 0 && <li className='header-icon cart' title='Estado del carro de compras'>

@@ -164,6 +164,10 @@ footer .copyright .cash-card .card-item {
 }
 
 @media screen and (max-width: 420px) {
+    footer .cash-card {
+        flex-wrap: wrap;
+    }
+    
     footer .copyright p {
         display: flex;
         flex-direction: row;

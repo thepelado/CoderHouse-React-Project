@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import ItemList from '../../components/itemlist';
 import { useFirebaseContext } from '../../context/firebaseContext';
 import './itemsearchcontainer.css';
+import { Col, Row } from 'react-bootstrap';
 
 const ItemSearchContainer = () => {
 
@@ -10,18 +11,24 @@ const ItemSearchContainer = () => {
     const [ criterio, setCriterio ] = useState();
     const [ isLoading, setIsLoading ] = useState();
     const [queryParams, setQueryParams] = useState(new URLSearchParams(useLocation().search));
-    const { getItemsByTerm } = useFirebaseContext();
+    const { getAllItems } = useFirebaseContext();
     
     useEffect(() => {
         setIsLoading(true);
         setCriterio(queryParams.get("s"));
         if (criterio) {
-            getItemsByTerm(criterio).then((querySnapshot) => {
+            /*Firebase no tiene forma de hacer consultas del tipo OR o con Like %% y multiples campos por
+            lo que decidi obtener todos los productos en stock y filtrar sobre estos */  
+            getAllItems().then((querySnapshot) => {
                 if (querySnapshot.length === 0) {
                     console.log('Error');
                 } else {
-                    if (querySnapshot.docs.length > 0) {                        
-                        setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+                    if (querySnapshot.docs.length > 0) {
+                        const queryResult = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+                        setItems(queryResult.filter((result) => 
+                            result.title.toLowerCase().indexOf(criterio.toLowerCase())>=0 || 
+                            result.brand.toLowerCase().indexOf(criterio.toLowerCase())>=0
+                        ));
                     } else {
                         setItems([]);
                     }
@@ -35,26 +42,34 @@ const ItemSearchContainer = () => {
     if (isLoading)
     {
         return (
-            <div className="list-items mt-2 d-flex flex-wrap">
-                <div className="col-12 p-5 text-center">
+            <Row className="list-items mt-2 flex-wrap">
+                <Col xs={12} className="text-center">                
                     <div className="spinner-border" role="status">
                         <span className="sr-only">Cargando...</span>
                     </div>
-                </div>
-            </div>
+                </Col>
+            </Row>
         )
     }
 
     return (
-        <div className="list-items mt-2 d-flex flex-wrap">
+        <Row className="list-items mt-2 flex-wrap">
             { criterio &&
-                <div className="col-12">
+                <Col xs={12}>
                     <h2>Resultados de búsqueda: "{criterio}"</h2>
                     <hr/>
-                </div>
+                </Col>
             }
-            <ItemList itemsData={items}/>
-        </div>
+            <Col xs={12}>
+                <Row>
+                    { items && items.length > 0?
+                        <ItemList itemsData={items}/>
+                    :
+                        <p className="w-100 text-center">No se encontrarón productos para su busqueda</p>                
+                    }
+                </Row>
+            </Col>
+        </Row>
     )
 }
 

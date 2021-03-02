@@ -14,7 +14,7 @@
     border-right: 10px solid #ececec;
 }
 
-.item-detail-container .item-detail .card-text .price {
+.item-detail-container .item-detail .text .price {
     font-weight: 600;
     font-size: 40px;
 }

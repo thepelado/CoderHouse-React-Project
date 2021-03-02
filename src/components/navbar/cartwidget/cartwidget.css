@@ -29,6 +29,22 @@ header nav .header-icons li i {
 header nav .header-icons li:first-child i {
     margin-left: 0;
 }
+
+header nav .header-icons li.user {
+    color: #FFF;
+}
+
+header nav .header-icons li.user .user-options {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;  
+}
+
+header nav .header-icons li.user .user-options .dropdown-toggle {
+    background: transparent;
+    border: none;
+}
   
 header nav .header-icons li.cart {
     position: relative;

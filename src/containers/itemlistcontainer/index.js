@@ -3,6 +3,7 @@ import { useFirebaseContext } from '../../context/firebaseContext';
 import { useParams } from 'react-router-dom';
 import ItemList from '../../components/itemlist';
 import './itemlistcontainer.css';
+import { Col, Row } from 'react-bootstrap';
 
 const ItemListContainer = () => {
 
@@ -43,33 +44,35 @@ const ItemListContainer = () => {
     if (isLoading)
     {
         return (
-            <div className="list-items mt-2 d-flex flex-wrap">
-                <div className="col-12 p-5 text-center">
+            <Row className="list-items flex-wrap">
+                <Col xs={12} className="text-center mt-5">                
                     <div className="spinner-border" role="status">
                         <span className="sr-only">Cargando...</span>
                     </div>
-                </div>
-            </div>
+                </Col>
+            </Row>
         )
     }
 
     return (
-        <div className="list-items mt-2 d-flex flex-wrap">
+        <Row className="list-items mt-2 flex-wrap">
             { category &&
-                <div className="col-12">
+                <Col xs={12}>
                     <h2>{categoryTitle}</h2>
                     <hr/>
-                </div>
+                </Col>
             }
-            { items.length > 0 ?
-                    <ItemList itemsData={items}/>
-                :
-                    <div className="col-12 text-center">
-                        <h2>No hay productos en esta categoría</h2> 
-                    </div>                    
-            }
+            <Col xs={12}>
+                <Row className="mt-2">
+                    { items && items.length > 0 ?
+                        <ItemList itemsData={items}/>
+                        :
+                        <p className="w-100 text-center">No hay productos en esta categoría</p>              
+                    }
+                </Row> 
+            </Col>
 
-        </div>
+        </Row>
     )
 }
 

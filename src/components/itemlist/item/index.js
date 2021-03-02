@@ -2,16 +2,15 @@ import React from 'react';
 import NumberFormat from 'react-number-format';
 import { Link } from 'react-router-dom';
 import './item.css';
+import { Badge } from 'react-bootstrap';
 
 const Item = ({item}) => {
 
     return (
         <Link to={`/item/${item.id}`} className="item">
             <div className='card rounded h-100 shadow-sm p-0'>
-                {item.stock < 10 &&
-                    <div className="position-absolute bg-danger px-2 py-1 rounded" style={{ "right": "0" }}>
-                        <span className="text-white">¡Últimas unidades!</span>
-                    </div>
+                {item.stock < 10 &&                    
+                    <Badge variant="danger" className="position-absolute px-3 py-2" style={{ "right": "0" }}>¡Últimas unidades!</Badge>
                 }
                 <div className='card-img-top'>
                     <img className='img-fluid' src={item.photo} alt={item.title}></img>

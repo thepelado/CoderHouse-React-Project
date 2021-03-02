@@ -1,4 +1,5 @@
 import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import Navbar from './components/navbar';
 import Footer from './components/footer';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
@@ -10,9 +11,10 @@ import Page404 from './containers/page404';
 import CartProvider from './context/cartContext';
 import WishListProvider from './context/wishListContext';
 import FirebaseProvider from './context/firebaseContext';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
 import WishList from './components/wishlist';
+import OrderDetailContainer from './containers/orderdetailcontainer';
+import LoginContainer from './containers/logincontainer';
+import PerfilContainer from './containers/perfilcontainer';
 
 function App() { 
 
@@ -43,6 +45,15 @@ function App() {
                   </Route>
                   <Route exact path="/wishlist">
                     <WishList/>
+                  </Route>
+                  <Route exact path="/perfil">
+                    <PerfilContainer/>
+                  </Route>
+                  <Route exact path="/order/:orderId">
+                    <OrderDetailContainer/>
+                  </Route>
+                  <Route exact path="/login">
+                    <LoginContainer/>
                   </Route>
                   <Route path="*" children={<Page404/>} />
                 </Switch>

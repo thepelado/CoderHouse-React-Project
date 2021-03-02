@@ -1,0 +1,66 @@
+.login-container {
+    min-height: 500px;
+    background: #ececec;
+}
+
+.login-container .logo {
+    width: 180px;
+    height: auto;
+    margin: 0 auto;
+}
+
+.login-container .tabs-actions {
+    margin: 0 auto;
+    background-color: #fff;
+    width: 500px;
+    padding: 0;
+    border-radius: 1em; 
+    margin-bottom: 50px;   
+}
+
+.login-container .tabs-actions .nav-item {
+    font-size: 1.2em;
+    line-height: 1.4em;
+    cursor: pointer;
+    padding: .5em 1em;
+    width: 50%;
+    background-color: #ddd;
+    box-shadow: inset 5px -5px 25px -20px rgb(0 0 0 / 75%);
+    font-weight: 600;
+    border-radius: 0px;
+    border: 0;
+    color: #000;
+}
+
+.login-container .tabs-actions .nav-item:first-child {
+    border-top-left-radius: 15px;
+}
+
+.login-container .tabs-actions .nav-item:last-child {
+    border-top-right-radius: 15px;
+}
+
+.login-container .tabs-actions .nav-item.active {
+    background-color: #FFF;
+    box-shadow: none;
+    border-bottom: 0px;
+    position: relative;
+    display: block;
+    color: #000;
+}
+
+.login-container .tabs-actions .nav-item.active::after {
+    content: ' ';
+    border-bottom: 2px solid transparent;
+    display: block;
+    position: absolute;
+    bottom: -2px;
+    width: 85%;
+    border-color: #06c;
+}
+
+@media screen and (max-width: 768px ){
+    .login-container .tabs-actions {
+        max-width: 320px;
+    }
+}

@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
+import { Navbar as NavbarBootstrap, Nav } from "react-bootstrap";
 import './navlogo.css'
 
 const Navlogo = () => {
     return(
-        <Link to={`/`} className="navbar-brand">
+        <NavbarBootstrap.Brand href="/" className="navbar-brand">
             <img src='/assets/img/logo.png' className='logo' alt="Life Informática"/>
-        </Link>
+        </NavbarBootstrap.Brand>
     );
 }
 

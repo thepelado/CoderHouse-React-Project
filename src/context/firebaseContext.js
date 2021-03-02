@@ -1,12 +1,16 @@
 import React, { useContext } from 'react';
 import { getFirestore } from '../Firebase';
+import firebase from 'firebase/app';
+import sha1 from 'sha1';
 export const FirebaseContext = React.createContext(false);
 export const useFirebaseContext = () => useContext(FirebaseContext);
+
 
 const FirebaseProvider = ({ children }) => {
 
     const db = getFirestore();
  
+    /* Items */
     const getAllItems = () => {    
         return db.collection('ITEMS').where('stock', "!=", 0).get();
     }
@@ -19,77 +23,95 @@ const FirebaseProvider = ({ children }) => {
         return db.collection('ITEMS').where('category', '==', category).get();
     }
 
-    const getItemsByTerm = (term) => {
-        console.log(term);
-        return db.collection('ITEMS').orderBy('category').startAt(term).endAt(term+'\uf8ff').get();
-    }
-
-    const addItem = async () => {
-        const data = [    {
-            title: "Logitech B100 negro – Mouse",
-            brand: "Logitech",
-            categoryID: 1,
-            category: "Mouse",
-            stock: 10,
-            price: "600",
-            photo: "https://media.lifeinformatica.com/contents/Life/LOGITECH-910-003357/imgs/910-003357-01.jpg",
-            description: "Un ratón básico de oficina. Dispone de un control con seguimiento óptico suave y sensible y con una construcción para ambidiestros. Gracias a su conectividad Plug and Play estará listo para usar al momento.",
-            sku: "RALOG004"
-        },
-        {
-            title: "Cooler Master MK850 RGB MX red Aimpad – Teclado",
-            brand: "Cooler Master",
-            categoryID: 2,
-            category: "Teclados",
-            stock: 10,
-            price: "9599",
-            photo: "https://media.lifeinformatica.com/contents/Life/COOLER_MASTER-MK-850-GKCR1-SP/imgs/MK-850-GKCR1-SP-01.jpg",
-            description: "El teclado mecánico MK850 está totalmente equipado con la exclusiva tecnología Aimpad para el control analógico. Transición perfecta de MOBA a FPS a juegos de conducción e incluso simuladores de vuelo con un control sin precedentes en un grupo de ocho teclas (QWERASDF). Presentado con los interruptores rojos Cherry MX para mayor durabilidad, ruedas de precisión para ajustes fáciles en el juego y aluminio cepillado para durar en todas tus batallas. El MK850, combinado con el cable extraíble tipo C, el reposamuñecas magnético y la retroiluminación RGB por tecla, es el siguiente paso en la tecnología de teclados para gaming.",
-            sku: "TECOL019"
-        },
-        {
-            title: "Logitech C922 Pro Stream – Webcam",
-            brand: "Logitech",
-            categoryID: 3,
-            category: "Webcams",
-            stock: 10,
-            price: "12500",
-            photo: "https://media.lifeinformatica.com/contents/Life/LOGITECH-960-001088/imgs/960-001088-01.jpg",
-            description: "Webcam Logitech HD Pro Webcam C922. Lente de alta velocidad de enfoque con rango de apertura de 78º. Corrección de iluminación HD para escenarios con poca luz o con exceso de luz. Incorpora un micrófono dual stereo. Permite streaming a resolución HD 1080p a 30fps y 720p a 60fps.",
-            sku: "WCLOG010"
-        },
-        {
-            title: "Monitor 27p Benq Zowie Xl2731 144hz Gamer Full Hd",
-            brand: "Benq",
-            categoryID: 4,
-            category: "Monitores",
-            stock: 10,
-            price: "84800",
-            photo: "https://media.lifeinformatica.com/contents/Life/BENQ-9H.LGMLB.QBE/imgs/9H.LGMLB.QBE-01.jpg",
-            description: "La serie XL cuenta con los nuevos monitores de PC para e-sports, afinados para garantizar la experiencia más suave y sensible, así como las imágenes más claras: tus armas para la competición.",
-            sku: "TFBEN082"
-        },
-        {
-            title: "Ducky One 2 Mini Pure White RGB MX Brown Layout ES – Teclado",
-            brand: "Ducky",
-            categoryID: 2,
-            category: "Teclados",
-            stock: 5,
-            price: "7990",
-            photo: "https://media.lifeinformatica.com/contents/Life/DUCKY-DKON2061ST-BESALWWT1/imgs/DKON2061ST-BESALWWT1-01.jpg",
-            description: "Ducky One 2 Mini Pure White RGB con configuración de teclas en Español (SP). El teclado Ducky One 2 Mini Pure White RGB en color blanco puro es el teclado gaming miniaturizado para profesionales. Ahora con un nuevo bisel más elegante y efectos RGB totalmente personalizables. Rendimiento excepcional duradero y confiable. Incorpora interruptores (switch) de fabricante lider alemán Cherry MX Brown. Utiliza un USB tipo C desconectable con una frecuencia más alta de velocidad de sondeo de 1000Hz. Comfort gracias a su ajuste de altura de 3 niveles. Fabricado con un PCB de 4 capas de mayor rendimiento.",
-            sku: "TEDUC042"
-        }];
-
-        data.map( async (item) => {
-            await db.collection('ITEMS').add(item).then((result) => {
-                console.log(`Documento agregado con el ID: ${result}`);
+    const updateStock = (cart) => {
+        return new Promise((resolve, reject) => {
+            cart.map(async(cartItem) => {
+                let query = await db.collection('ITEMS').doc(cartItem.item.id).get();
+                if (!query.empty) {
+                    const productData = query.data();
+                    if (productData.stock >= cartItem.qty) {
+                        //Resto el stock
+                        productData.stock -= cartItem.qty;
+                        //Actualizo las existencias
+                        try {
+                            await db.collection('ITEMS').doc(cartItem.item.id).update({ stock: productData.stock -= cartItem.qty });//db.collection('ITEMS').doc(cartItem.item.id).update({ stock : productData.stock});
+                        } catch(e) {
+                            reject('Error al operar sobre la Base de Datos');
+                        }
+                    }
+                    else {
+                        reject(`No existen suficientes ${productData.title} para cubrir la demanda`);
+                    }
+                } else {
+                    reject('No existe el producto en la DB');
+                }
             })
-        })
+            resolve(true);
+        });
     }
+
+    /*Users*/
+    const registerUser = (data) => {
+        return new Promise(async(resolve, reject) => {
+            const res = await db.collection('USERS').add(data);
+            data.password = sha1(data.password);
+            if (res.id) {
+                localStorage.setItem('user', JSON.stringify({ id: res.id, nombre: data.nombre, phone: data.phone, email: data.email }));
+                resolve({ id: res.id, nombre: data.nombre, phone: data.phone, email: data.email });
+            } else {
+                reject('Error al almacenar en Firebase');
+            }
+        });
+    }
+
+    const loginUser = (data) => {
+        return new Promise(async(resolve, reject) => {
+            data.password = sha1(data.password);
+            const query =  await db.collection('USERS').where('email', '==', data.email).get();
+            if (!query.empty) {
+                const snapshot = query.docs[0];
+                const userData = snapshot.data();
+                if (data.password == userData.password) {
+                    localStorage.setItem('user', JSON.stringify({ id: snapshot.id, nombre: userData.nombre, phone: userData.phone, email: userData.email }));
+                    resolve({ id: snapshot.id, nombre: userData.nombre, phone: userData.phone, email: userData.email });
+                } else {
+                    reject('Usuario/Contraseña no válidos');
+                }
+            } else {
+                reject('Usuario/Contraseña no válidos');
+            }
+        });
+    }
+
+    /* Orders */
+    const createOrder = async(data) => {
+        return new Promise(async(resolve, reject) => {
+            const FieldValue = db.FieldValue;
+            const newOrder = {
+                ...data,
+                date: firebase.firestore.Timestamp.fromDate(new Date())
+            }
+            const res = await db.collection('ORDERS').add(newOrder);
+            if (res.id) {
+                resolve({ id: res.id, ...newOrder });
+            } else {
+                reject('Error al almacenar en Firebase');
+            }
+        });
+    }
+
+    const getOrderByID = (orderId) => {
+        return db.collection('ORDERS').doc(orderId).get();
+    }
+
+    const getOrdersByUser = (userId) => {
+        console.log(userId);
+        return db.collection('ORDERS').where('buyer.id', '==', userId).get();
+    }
+
 
     return (
-        <FirebaseContext.Provider value={{ getAllItems, getItemByID, getItemsByCategory, getItemsByTerm}}>
+        <FirebaseContext.Provider value={{ getAllItems, getItemByID, getItemsByCategory, createOrder, getOrderByID, getOrdersByUser, updateStock, registerUser, loginUser}}>
             {children}
         </FirebaseContext.Provider>
     )

@@ -1,0 +1,51 @@
+.form-register {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    margin: 1em 0;
+    padding-right: .9375rem;
+    padding-left: .9375rem;
+}
+
+.form-register .before-register-text {
+    font-weight: 600;
+}
+
+.form-register .form-row {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.form-register .form-row label,
+.form-register .form-row input {
+    width: 100%;
+    text-align: left;
+}
+
+.form-register input[type=email],
+.form-register input[type=password],
+.form-register input[type=search],
+.form-register input[type=text],
+.form-register input[type=url],
+.form-register textarea {
+    padding: .857em 1.214em;
+    background-color: transparent;
+    color: #818181;
+    background: #FFF;
+    line-height: 1.286em;
+    outline: 0;
+    border: 0;
+    -webkit-appearance: none;
+    border-radius: 1.571em;
+    box-sizing: border-box;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ddd;
+}
+
+
