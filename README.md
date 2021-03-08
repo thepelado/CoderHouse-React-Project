@@ -19,8 +19,7 @@ El proyecto esta basado en la web lifeinformatica.com pero con variantes para ir
 
 ## Convenciones
 
-Se buscó realizar los componentes de forma clara, para de esta forma cada uno tenga una responsabilidad definida.
-Se aplico Bootstrap en el proyecto, la idea es migrar a react-bootstrap
+Se buscó realizar los componentes de forma clara, para de esta forma cada uno tenga una responsabilidad definida. No se implemento el login de firebase con email y password ya que a posterior la idea es enlazar a una API para manejar las consultas.
 
 ## Features especiales
 
