@@ -14,7 +14,8 @@ import FirebaseProvider from './context/firebaseContext';
 import WishList from './components/wishlist';
 import OrderDetailContainer from './containers/orderdetailcontainer';
 import LoginContainer from './containers/logincontainer';
-import PerfilContainer from './containers/perfilcontainer';
+import ProfileContainer from './containers/profilecontainer';
+import OrdersContainer from './containers/orderscontainer';
 
 function App() { 
 
@@ -31,7 +32,7 @@ function App() {
                   <Route exact path="/">
                     <ItemListContainer/>
                   </Route>
-                  <Route exact path="/category/:category">
+                  <Route exact path="/categories/:category">
                     <ItemListContainer/>
                   </Route>
                   <Route exact path="/item/:itemId">
@@ -46,8 +47,11 @@ function App() {
                   <Route exact path="/wishlist">
                     <WishList/>
                   </Route>
-                  <Route exact path="/perfil">
-                    <PerfilContainer/>
+                  <Route exact path="/profile">
+                    <ProfileContainer/>
+                  </Route>
+                  <Route exact path="/orders">
+                    <OrdersContainer/>
                   </Route>
                   <Route exact path="/order/:orderId">
                     <OrderDetailContainer/>

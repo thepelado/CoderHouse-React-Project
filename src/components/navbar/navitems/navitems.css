@@ -9,6 +9,10 @@ header nav li a:hover {
     text-decoration: none;
 }
 
+header nav .navbar-collapse .dropdown-menu a::first-letter {
+    text-transform: uppercase;
+}
+
 @media screen and (max-width: 991px) {
     a#collasible-nav-dropdown {
         color: #000;

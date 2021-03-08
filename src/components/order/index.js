@@ -4,7 +4,6 @@ import { Table } from 'react-bootstrap';
 import OrderItem from './orderitem';
 
 const Order = ({order}) => {
-    console.log(order);
     return (
         <Table responsive className="product mt-3">
             <thead>

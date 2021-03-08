@@ -10,14 +10,17 @@ const ItemDetailContainer = () => {
 
     const [ item, setItem ] = useState({});
     const [ isLoading, setIsLoading ] = useState();
-    const { getItemByID } = useFirebaseContext();
+    const { getItemByID, crearProductos } = useFirebaseContext();
     const { itemId } = useParams();
  
     useEffect(() => {
         setIsLoading(true);
-        getItemByID(itemId).then((querySnapshot) => {
-            setItem({id: querySnapshot.id, ...querySnapshot.data()});
-        }).catch(error => console.log(error)).finally(() => setIsLoading(false))
+        getItemByID(itemId).then((item) => {
+            setItem(item);
+        }).catch(error => {
+            console.log(error);
+            setItem({});
+        }).finally(() => setIsLoading(false))
     }, []);
 
         if (isLoading)
@@ -36,10 +39,10 @@ const ItemDetailContainer = () => {
                 </Row>
             )
         }
-        if (!item)
+        if (!item.id)
         {
             return (
-                <Page404/>
+                <Page404 title="Producto no encontrado"/>
             )
         }
         return (

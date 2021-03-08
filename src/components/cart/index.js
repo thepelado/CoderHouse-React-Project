@@ -16,7 +16,8 @@ const Cart = () => {
     }
 
     const handlePushOrder = () => {
-        let newOrder = { buyer: loggedUser, items: [...cart], total: cart.totalPrice}
+        //Agarras los 3 campos
+        let newOrder = { buyer: loggedUser, items: [...cart], total: cart.totalPrice, state: "pending"}
         //Actualizo el stock de los productos
         updateStock(cart).then( (result) => {
             //Ya actualizado el stock, almaceno la orden de compra
@@ -24,7 +25,7 @@ const Cart = () => {
         })
         .then( (order) => {
             //Borro el carrito
-            clearCart();           
+            clearCart();
             //Redirijo al componente para mostrar la orden de compra
             history.push(`/order/${order.id}`)
         })
@@ -46,15 +47,18 @@ const Cart = () => {
                     <Col xs={12}>
                         <Row>
                             <h3>RESUMEN DE LA COMPRA</h3>
-                            <Table responsive className="product mt-3">
+                            { loggedUser.id &&
+                                <h5 className="mt-4 mb-2 w-100">Comprar como <Link to={'/profile'}>{loggedUser.email}</Link></h5>
+                            }
+                            <Table responsive className="cart-product mt-3">
                                 <thead>
                                     <tr>
-                                        <th className="product-remove">&nbsp;</th>
-                                        <th className="product-thumbnail">&nbsp;</th>
-                                        <th className="product-name">Producto</th>
-                                        <th className="product-price">Precio</th>
-                                        <th className="product-quantity">Cantidad</th>
-                                        <th className="product-subtotal">Total</th>
+                                        <th className="cart-product-remove">&nbsp;</th>
+                                        <th className="cart-product-thumbnail">&nbsp;</th>
+                                        <th className="cart-product-name">Producto</th>
+                                        <th className="cart-product-price">Precio</th>
+                                        <th className="cart-product-quantity">Cantidad</th>
+                                        <th className="cart-product-subtotal">Total</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -77,6 +81,7 @@ const Cart = () => {
                         { !loggedUser.id?
                             <>
                                 <Row className="justify-content-center my-3">
+                                    <p>¿Tienes cuenta? <Link to={'/login?tab=login'} className="btn btn-primary">Iniciar sesión</Link>, </p>
                                     <p>¿Todavía no eres cliente? <Link to={'/login?tab=register'} className="btn btn-success">Registrate</Link></p> 
                                 </Row>
                             </>

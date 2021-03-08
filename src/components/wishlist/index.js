@@ -22,13 +22,14 @@ const WishList = () => {
                 :
                     <Col xs={12}>
                         <h3>LISTA DE DESEOS</h3>
-                        <Table responsive className="product mt-3">
+                        <Table responsive className="wishlist mt-3">
                             <thead>
                                 <tr>
-                                    <th className="product-remove">&nbsp;</th>
-                                    <th className="product-thumbnail">&nbsp;</th>
-                                    <th className="product-name">Producto</th>
-                                    <th className="product-price">Precio</th>
+                                    <th className="wishlist-remove">&nbsp;</th>
+                                    <th className="wishlist-thumbnail">&nbsp;</th>
+                                    <th className="wishlist-name">Producto</th>
+                                    <th className="wishlist-price">Precio</th>
+                                    <th className="wishlist-remove">&nbsp;</th>
                                 </tr>
                             </thead>
                             <tbody>

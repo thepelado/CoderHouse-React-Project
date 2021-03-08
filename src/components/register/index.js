@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Button, Form, Collapse, Alert } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
@@ -12,7 +12,7 @@ const Register = () => {
     const { cart, setUser } = useCartContext();
     const { registerUser } = useFirebaseContext();
     const { register, handleSubmit, watch, errors } = useForm();
-    const [ btnSubmit, setBtnSubmit ] = useState('Ingresar');
+    const [ btnSubmit, setBtnSubmit ] = useState('Registrar');
     const history = useHistory();
 
     const onSubmitRegister = (data) => {
@@ -29,7 +29,10 @@ const Register = () => {
                 console.error('Error al almacenar el usuario');
             }
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+            console.error(error)
+            setError(error);
+        });
     };
 
 

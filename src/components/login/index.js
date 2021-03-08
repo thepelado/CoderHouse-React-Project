@@ -6,13 +6,13 @@ import { useFirebaseContext } from '../../context/firebaseContext';
 import { useCartContext } from '../../context/cartContext';
 import './login.css';
 
-const Login = () => {
+const Login = (redirectTo="/") => {
     const [error, setError] = useState('');
     const [open, setOpen] = useState(false);
 
     const { register, handleSubmit, watch, errors } = useForm();
     const { loginUser } = useFirebaseContext();
-    const { setUser } = useCartContext();
+    const { setUser, cart } = useCartContext();
     
     const history = useHistory();
     const onSubmitLogin = (data) => {
@@ -23,7 +23,11 @@ const Login = () => {
             console.log(result);
             if (result.id) {
                 setUser(result);
-                history.push("/");
+                if (cart.length > 0) {
+                    history.push('/cart');
+                } else {
+                    history.push('/');
+                }
             }
         })
         .catch((error) => {

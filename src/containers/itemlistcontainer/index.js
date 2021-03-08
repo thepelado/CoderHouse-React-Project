@@ -3,7 +3,7 @@ import { useFirebaseContext } from '../../context/firebaseContext';
 import { useParams } from 'react-router-dom';
 import ItemList from '../../components/itemlist';
 import './itemlistcontainer.css';
-import { Col, Row } from 'react-bootstrap';
+import { Col, Row, Carousel } from 'react-bootstrap';
 
 const ItemListContainer = () => {
 
@@ -17,27 +17,28 @@ const ItemListContainer = () => {
         setIsLoading(true);
         if (category) {
             setCategoryTitle(category);
-            getItemsByCategory(category).then((querySnapshot) => {
-                if (querySnapshot.length === 0) {
-                    console.log('Error');
-                } else {
-                    if (querySnapshot.docs.length > 0) {                        
-                        setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-                    } else {
-                        setItems([]);
-                    }
+            getItemsByCategory(category).then((itemList) => {
+                if (itemList.length === 0) {
+                    console.log('No hay resultados');
+                    setItems([]);
+                } else {                      
+                    setItems(itemList);
                 }
-            }).catch(error => console.log(error)).finally(() => setIsLoading(false))
+            }).catch(error => {
+                console.log("Error", error);
+            }).finally(() => setIsLoading(false))
         } else {
-            getAllItems().then((querySnapshot) => {
-                if (querySnapshot.length === 0) {
+            getAllItems().then((itemList) => {
+                if (itemList.length === 0) {
                     console.log('No hay datos');
                     setIsLoading(false)
                 } else {
-                    setItems(querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })))
+                    setItems(itemList)
                     setIsLoading(false)
                 }
-            }).catch(error => console.log(error));
+            }).catch(error => {
+                console.log(error)
+            });
         }
     }, [category]);
 
@@ -55,24 +56,53 @@ const ItemListContainer = () => {
     }
 
     return (
-        <Row className="list-items mt-2 flex-wrap">
-            { category &&
-                <Col xs={12}>
-                    <h2>{categoryTitle}</h2>
-                    <hr/>
-                </Col>
+        <>
+            {!category && 
+                <Row>
+                    <Carousel className="w-100">
+                        <Carousel.Item>
+                            <img
+                            className="d-block w-100"
+                            src="https://media.lifeinformatica.com/contents/2020/04/mejorespcyportatiles.jpg"
+                            alt="Mejores Portatiles"
+                            />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                            className="d-block w-100"
+                            src="https://media.lifeinformatica.com/contents/2020/10/header-amd.jpg"
+                            alt="AMD Ryzen"
+                            />
+                        </Carousel.Item>
+                        <Carousel.Item>
+                            <img
+                            className="d-block w-100"
+                            src="https://media.lifeinformatica.com/contents/2021/02/RTX30series-1-min.jpg"
+                            alt="G-FORCE RTX"
+                            />
+                        </Carousel.Item>
+                    </Carousel>
+                </Row>
             }
-            <Col xs={12}>
-                <Row className="mt-2">
-                    { items && items.length > 0 ?
-                        <ItemList itemsData={items}/>
-                        :
-                        <p className="w-100 text-center">No hay productos en esta categoría</p>              
-                    }
-                </Row> 
-            </Col>
+            <Row className="list-items mt-2 flex-wrap">
+                { category &&
+                    <Col xs={12}>
+                        <h2 className="categoryTitle">{categoryTitle}</h2>
+                        <hr/>
+                    </Col>
+                }
+                    <Col xs={12}>
+                        <Row className="mt-2">
+                            { items && items.length > 0 ?
+                                <ItemList itemsData={items}/>
+                                :
+                                <p className="w-100 text-center">No hay productos en esta categoría</p>              
+                            }
+                        </Row> 
+                    </Col>
 
-        </Row>
+            </Row>
+        </>
     )
 }
 

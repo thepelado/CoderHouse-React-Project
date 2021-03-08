@@ -19,19 +19,15 @@ const ItemSearchContainer = () => {
         if (criterio) {
             /*Firebase no tiene forma de hacer consultas del tipo OR o con Like %% y multiples campos por
             lo que decidi obtener todos los productos en stock y filtrar sobre estos */  
-            getAllItems().then((querySnapshot) => {
-                if (querySnapshot.length === 0) {
-                    console.log('Error');
+            getAllItems().then((result) => {
+                if (result.length === 0) {
+                    console.log('No se encontraron resultados');
+                    setItems([]);
                 } else {
-                    if (querySnapshot.docs.length > 0) {
-                        const queryResult = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                        setItems(queryResult.filter((result) => 
-                            result.title.toLowerCase().indexOf(criterio.toLowerCase())>=0 || 
-                            result.brand.toLowerCase().indexOf(criterio.toLowerCase())>=0
-                        ));
-                    } else {
-                        setItems([]);
-                    }
+                    setItems(result.filter((result) => 
+                        result.title.toLowerCase().indexOf(criterio.toLowerCase())>=0 || 
+                        result.brand.toLowerCase().indexOf(criterio.toLowerCase())>=0
+                    ));
                 }
             }).catch(error => console.log(error)).finally(() => setIsLoading(false))
         }

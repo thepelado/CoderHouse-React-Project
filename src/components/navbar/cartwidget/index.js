@@ -9,7 +9,8 @@ const Cartwidget = () => {
     const { cart, loggedUser, setUser } = useCartContext();
     const history = useHistory();
     const cerrarSesion = () => setUser([]);
-    const perfilHandle = () => history.push('/perfil');
+    const perfilHandle = () => history.push('/profile');
+    const myOrdersHandle = () => history.push('/orders');
 
     return(
         <ul className='header-icons'>
@@ -33,23 +34,23 @@ const Cartwidget = () => {
                             <Dropdown.Item as="button" onClick={perfilHandle}>
                                 Perfil
                             </Dropdown.Item>
+                            <Dropdown.Item as="button" onClick={myOrdersHandle}>
+                                Mis Ordenes
+                            </Dropdown.Item>
                             <Dropdown.Item as="button" onClick={cerrarSesion}>Cerrar Sesión</Dropdown.Item>                            
                         </DropdownButton>
                     </div>
                 }
             </li>
-            <>
-                { cart.length > 0 && <li className='header-icon cart' title='Estado del carro de compras'>
-                    <Link to={'/cart'}>
-                        <i className='cart-icon fas fa-shopping-cart'></i>
-                        <span className='cart-counter'>{cart.count}</span>
-                        <span className='cart-amount'>
-                            <NumberFormat value={cart.totalPrice} decimalSeparator={','} displayType={'text'} thousandSeparator={'.'} prefix={'$'} />
-                        </span>
-                    </Link>
-                </li>
-                }
-            </>
+            <li className='header-icon cart' title='Estado del carro de compras'>
+                <Link to={'/cart'}>
+                    <i className='cart-icon fas fa-shopping-cart'></i>
+                    <span className='cart-counter'>{cart.count}</span>
+                    <span className='cart-amount'>
+                        <NumberFormat value={cart.totalPrice} decimalSeparator={','} displayType={'text'} thousandSeparator={'.'} prefix={'$'} />
+                    </span>
+                </Link>
+            </li>
         </ul>
     );
 }

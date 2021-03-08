@@ -2,25 +2,91 @@ import React, { useContext } from 'react';
 import { getFirestore } from '../Firebase';
 import firebase from 'firebase/app';
 import sha1 from 'sha1';
+
 export const FirebaseContext = React.createContext(false);
 export const useFirebaseContext = () => useContext(FirebaseContext);
-
 
 const FirebaseProvider = ({ children }) => {
 
     const db = getFirestore();
  
+    /* Categories */
+    const getAllCategories = () => {    
+        return new Promise( (resolve, reject) => {
+            try {
+                db.collection('CATEGORIES')
+                .get()
+                .then((value) => {
+                    resolve(value.docs.map( (category) => {
+                        return { id: category.id, ...category.data() }
+                    }));
+                });
+            } catch (error) {
+                reject(`Ocurrió un error: ${error}`);
+            }
+        });
+    }
     /* Items */
     const getAllItems = () => {    
-        return db.collection('ITEMS').where('stock', "!=", 0).get();
+        return new Promise( (resolve, reject) => {
+            try {
+                db.collection('ITEMS')
+                .where('stock', "!=", 0)
+                .get()
+                .then(async(value) => {
+                    let itemList = await Promise.all(value.docs.map( async (product) => {
+                        const CategoriasCollection = db.collection('CATEGORIES');
+                        let auxCategorias = await CategoriasCollection.doc(product.data().categoryID).get()
+                        return { id: product.id, ...product.data(), category:auxCategorias.data().description }
+                    }))
+                    resolve(itemList);
+                });
+            } catch (error) {
+                reject(`Ocurrió un error: ${error}`);
+            }
+        });
     }
 
     const getItemByID = (itemId) => {
-        return db.collection('ITEMS').doc(itemId).get();
+        return new Promise( (resolve, reject) => {
+            try {
+                db.collection('ITEMS')
+                .doc(itemId)
+                .get()
+                .then(async(product) => {
+                    if (product.data()) {
+                        const CategoriasCollection = db.collection('CATEGORIES');
+                        let itemCategory = await CategoriasCollection.doc(product.data().categoryID).get()
+                        resolve({ id: product.id, ...product.data(), category:itemCategory.data().description });
+                    } else {
+                        reject(`Producto no existente`);
+                    }
+                });
+            } catch (error) {
+                reject(`Ocurrió un error: ${error}`);
+            }
+        });
     }
 
     const getItemsByCategory = (category) => {
-        return db.collection('ITEMS').where('category', '==', category).get();
+        return new Promise( async(resolve, reject) => {
+            try {
+                let queryCategoria = await db.collection('CATEGORIES').where('key', '==', category.toLowerCase()).get()
+                if (queryCategoria.docs.length == 1 )
+                {
+                    let categoryID = queryCategoria.docs.[0].id;
+                    let queryItems = await db.collection('ITEMS').where('categoryID', '==', categoryID).get();
+                    let itemList = await queryItems.docs.map( (product) => {
+                        return { id: product.id, ...product.data(), category:category }
+                    })
+                    resolve(itemList);
+                } else {
+                    reject(`No existe la categoría: ${category}`);
+                }
+            } catch (error) {
+                reject(`Ocurrió un error: ${error}`);
+            }
+        });
     }
 
     const updateStock = (cart) => {
@@ -34,7 +100,7 @@ const FirebaseProvider = ({ children }) => {
                         productData.stock -= cartItem.qty;
                         //Actualizo las existencias
                         try {
-                            await db.collection('ITEMS').doc(cartItem.item.id).update({ stock: productData.stock -= cartItem.qty });//db.collection('ITEMS').doc(cartItem.item.id).update({ stock : productData.stock});
+                            await db.collection('ITEMS').doc(cartItem.item.id).update({ stock: productData.stock });
                         } catch(e) {
                             reject('Error al operar sobre la Base de Datos');
                         }
@@ -53,13 +119,20 @@ const FirebaseProvider = ({ children }) => {
     /*Users*/
     const registerUser = (data) => {
         return new Promise(async(resolve, reject) => {
-            const res = await db.collection('USERS').add(data);
-            data.password = sha1(data.password);
-            if (res.id) {
-                localStorage.setItem('user', JSON.stringify({ id: res.id, nombre: data.nombre, phone: data.phone, email: data.email }));
-                resolve({ id: res.id, nombre: data.nombre, phone: data.phone, email: data.email });
+            //Reviso que el mail ya no este en uso 
+            const query = await db.collection('USERS').where("email", "==", data.email).get();
+            if (query.docs.length == 0)
+            {
+                const res = await db.collection('USERS').add(data);
+                data.password = sha1(data.password);
+                if (res.id) {
+                    localStorage.setItem('user', JSON.stringify({ id: res.id, nombre: data.nombre, phone: data.phone, email: data.email }));
+                    resolve({ id: res.id, nombre: data.nombre, phone: data.phone, email: data.email });
+                } else {
+                    reject('Error al almacenar en Firebase');
+                }
             } else {
-                reject('Error al almacenar en Firebase');
+                reject('Email ya utilizado');
             }
         });
     }
@@ -105,13 +178,11 @@ const FirebaseProvider = ({ children }) => {
     }
 
     const getOrdersByUser = (userId) => {
-        console.log(userId);
         return db.collection('ORDERS').where('buyer.id', '==', userId).get();
     }
 
-
     return (
-        <FirebaseContext.Provider value={{ getAllItems, getItemByID, getItemsByCategory, createOrder, getOrderByID, getOrdersByUser, updateStock, registerUser, loginUser}}>
+        <FirebaseContext.Provider value={{ getAllCategories, getAllItems, getItemByID, getItemsByCategory, createOrder, getOrderByID, getOrdersByUser, updateStock, registerUser, loginUser}}>
             {children}
         </FirebaseContext.Provider>
     )

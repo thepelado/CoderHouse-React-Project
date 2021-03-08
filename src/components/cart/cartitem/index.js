@@ -11,9 +11,9 @@ const CartItem = ({cartItem}) => {
     }
 
     return (
-        <tr className="item">
+        <tr className="cart-item">
             <td className="align-middle">
-                <button onClick={handleRemoveItem}><i className="fas fa-times"></i></button>
+                <button title="Remover del carrito" onClick={handleRemoveItem}><i className="fas fa-times"></i></button>
             </td>
             <td>
                 <img className='photo img-fluid' src={cartItem.item.photo} alt={cartItem.item.title}></img>

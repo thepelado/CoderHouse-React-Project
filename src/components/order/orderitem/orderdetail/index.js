@@ -1,9 +1,8 @@
-import { Link } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
-import React, { useState } from 'react';
+import React from 'react';
 import OrderDetailItem from './orderdetailitem';
 import './orderdetail.css';
-import { Col, Row, Container, Table } from 'react-bootstrap';
+import { Table } from 'react-bootstrap';
 
 const OrderDetail = ({order}) => {
     return (

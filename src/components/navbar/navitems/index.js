@@ -1,15 +1,27 @@
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import { Nav, NavDropdown } from "react-bootstrap";
+import {useFirebaseContext } from "../../../context/firebaseContext";
 import './navitems.css';
 
 const Navitems = () => {
+    const { getAllCategories } = useFirebaseContext();
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        getAllCategories().then( (result) => setCategories(result))
+        .catch((error) => console.log(error))
+        .finally();
+    }, []);
+
     return(
         <Nav className="mr-auto">
             <NavDropdown title="Categor&iacute;as" id="collasible-nav-dropdown">
-                <NavDropdown.Item href="/category/Mouse">Mouse</NavDropdown.Item>
-                <NavDropdown.Item href="/category/Teclados">Keyboards</NavDropdown.Item>
-                <NavDropdown.Item href="/category/Webcams">Webcams</NavDropdown.Item>
-                <NavDropdown.Item href="/category/Monitores">Monitores</NavDropdown.Item>
+                {
+                    categories.map( (item, key) => {
+                        let route = `/categories/${item.key}`;
+                        return <NavDropdown.Item key={item.key} href={route}>{item.description}</NavDropdown.Item>
+                    })
+                }
             </NavDropdown>
         </Nav>
     );

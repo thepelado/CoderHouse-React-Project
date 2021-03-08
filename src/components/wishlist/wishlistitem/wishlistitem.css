@@ -1,4 +1,4 @@
-.product .photo {
+.wishlist .photo {
     max-width: 100px;
     margin: auto;
     height: 92px;
@@ -7,12 +7,30 @@
     padding: 4px;
 }
 
-.product button {
+.wishlist button.remove {
     background: transparent;
     border: none;
+    color: #000;
 }
 
-.product button i {
-    color: #a7a7a7;
+.wishlist button i {
     font-size: 1.5em;
+}
+
+.wishlist button.remove i {
+    color: #a7a7a7;
+}
+
+.wishlist .item-count {
+    display: flex;
+    width: 50%;
+}
+
+.wishlist .btn-add-to-cart {
+    margin-left: 10px;
+}
+
+.wishlist .btn-add-to-cart i {
+    color: #FFF;
+    font-size: 1em;
 }

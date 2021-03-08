@@ -1,3 +1,17 @@
 .list-items {
     min-height: 500px;
 }
+
+.carousel .carousel-item {
+    height: 396px;
+    max-height: 396px;
+}
+
+.carousel .carousel-item img {
+    height: 100%;
+    object-fit: fill;
+}
+
+.categoryTitle::first-letter {
+    text-transform: uppercase;
+}

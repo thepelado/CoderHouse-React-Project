@@ -4,7 +4,6 @@ import './footer.css';
 const Footer = () => {
 
     const handlerSubscription = (e) => {
-        console.log(e.target.value);
     }
 
     return (

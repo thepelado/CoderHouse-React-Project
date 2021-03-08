@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 import NumberFormat from 'react-number-format';
 import Moment from 'react-moment';
-import firebase from 'firebase/app';
 import './orderitem.css';
 
 const OrderItem = ({orderItem}) => {

@@ -17,7 +17,7 @@ const LoginContainer = () => {
                 </Row>
                 <Row>
                     <Col xs={12} md={6} className="mt-5 tabs-actions">
-                        <Tabs defaultActiveKey={tabSelected.get("tab")? 'register': 'login'} id="action-tab">
+                        <Tabs defaultActiveKey={tabSelected.get("tab")? tabSelected.get("tab"): 'login'} id="action-tab">
                             <Tab eventKey="login" title="Login">
                                 <Login/>
                             </Tab>
